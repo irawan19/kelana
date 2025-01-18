@@ -19,12 +19,14 @@
                 </span>
             </li>
             <li class="list__item--border-top"></li>
-            <li class="mdl-menu__item mdl-list__item">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">account_circle</i>
-                    Akun
-                </span>
-            </li>
+            <a href="{{URL('/akun')}}">
+                <li class="mdl-menu__item mdl-list__item">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">account_circle</i>
+                        Akun
+                    </span>
+                </li>
+            </a>
             <li class="list__item--border-top"></li>
             <a href="{{URL('/logout')}}">
                 <li class="mdl-menu__item mdl-list__item">
