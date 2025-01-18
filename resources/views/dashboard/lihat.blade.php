@@ -1,15 +1,18 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
+@section('content')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-welcome />
+	<div class="mdl-card mdl-shadow--2dp employer-form" action="#">
+            <div class="mdl-card mdl-shadow--2dp robot">
+                <div class="mdl-card__title mdl-card--expand">
+					
+                </div>
+                <div class="mdl-card__supporting-text">
+				    <div class="center-align">
+				    	<p style="font-weight: bold; font-size: 20px; margin-bottom: 5px">Halo, {{Auth::user()->name}}</p>
+				    	<p style="font-size: 16px">Selamat Datang di halaman dashboard {{ config('app.name', 'Laravel') }}</p>
+				    </div>
+                </div>
             </div>
-        </div>
     </div>
-</x-app-layout>
+
+@endsection

@@ -1,48 +1,45 @@
 <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+    <div class="mdl-card mdl-card__login mdl-shadow--2dp">
+        <div class="mdl-card__supporting-text color--dark-gray">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+                    <div class="center-align">
+                        <x-authentication-card-logo />
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+                    <span class="login-name text-color--white">Sign in</span>
+                    <span class="login-secondary-text text-color--smoke">Masukkan data di kolom untuk masuk ke aplikasi</span>
+                </div>
 
-        <x-validation-errors class="mb-4" />
+                <x-validation-errors class="mb-4 customerrorlogin" />
 
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
+                @session('status')
+                    <div class="mb-4 font-medium text-sm text-green-600">
+                        {{ $value }}
+                    </div>
+                @endsession
+
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size">
+                            <input class="mdl-textfield__input" type="text" id="e-mail" name="email" :value="old('email')" autofocus autocomplete="username">
+                            <label class="mdl-textfield__label" for="e-mail">Email / Username</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size">
+                            <input class="mdl-textfield__input" type="password" id="password" name="password" autocomplete="current-password">
+                            <label class="mdl-textfield__label" for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone submit-cell">
+                        <div class="mdl-layout-spacer"></div>
+                        <x-button class="mdl-button mdl-js-button mdl-button--raised color--light-blue">
+                            Masuk
+                        </x-button>
+                    </div>
+                </form>
             </div>
-        @endsession
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <div>
-                <x-label for="email" value="{{ __('Email / Username') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
+        </div>
+    </div>
 </x-guest-layout>
