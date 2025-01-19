@@ -10,4 +10,7 @@ class Kategori extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $fillable = [
+        'nama'
+    ];
 }

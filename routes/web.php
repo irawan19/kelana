@@ -28,7 +28,6 @@ Route::middleware([
     //Kategori
     Route::group(['prefix' => 'kategori'], function() {
         Route::get('/', [Kategori::class, 'index']);
-        Route::get('/tambah', [Kategori::class, 'tambah']);
         Route::post('/prosestambah', [Kategori::class, 'prosestambah']);
         Route::get('/edit/{id}', [Kategori::class, 'edit']);
         Route::patch('/prosesedit/{id}', [Kategori::class, 'prosesedit']);
@@ -38,7 +37,6 @@ Route::middleware([
     //Tipe
     Route::group(['prefix' => 'tipe'], function() {
         Route::get('/', [Tipe::class, 'index']);
-        Route::get('/tambah', [Tipe::class, 'tambah']);
         Route::post('/prosestambah', [Tipe::class, 'prosestambah']);
         Route::get('/edit/{id}', [Tipe::class, 'edit']);
         Route::patch('/prosesedit/{id}', [Tipe::class, 'prosesedit']);
@@ -48,7 +46,6 @@ Route::middleware([
     //Merk
     Route::group(['prefix' => 'merk'], function() {
         Route::get('/', [Merk::class, 'index']);
-        Route::get('/tambah', [Merk::class, 'tambah']);
         Route::post('/prosestambah', [Merk::class, 'prosestambah']);
         Route::get('/edit/{id}', [Merk::class, 'edit']);
         Route::patch('/prosesedit/{id}', [Merk::class, 'prosesedit']);
@@ -58,7 +55,6 @@ Route::middleware([
     //Barang
     Route::group(['prefix' => 'barang'], function() {
         Route::get('/', [Barang::class, 'index']);
-        Route::get('/tambah', [Barang::class, 'tambah']);
         Route::post('/prosestambah', [Barang::class, 'prosestambah']);
         Route::get('/edit/{id}', [Barang::class, 'edit']);
         Route::patch('/prosesedit/{id}', [Barang::class, 'prosesedit']);
@@ -68,7 +64,6 @@ Route::middleware([
     //Supplier
     Route::group(['prefix' => 'supplier'], function() {
         Route::get('/', [Supplier::class, 'index']);
-        Route::get('/tambah', [Supplier::class, 'tambah']);
         Route::post('/prosestambah', [Supplier::class, 'prosestambah']);
         Route::get('/edit/{id}', [Supplier::class, 'edit']);
         Route::patch('/prosesedit/{id}', [Supplier::class, 'prosesedit']);
@@ -78,7 +73,6 @@ Route::middleware([
     //Penawaran
     Route::group(['prefix' => 'penawaran'], function() {
         Route::get('/', [Penawaran::class, 'index']);
-        Route::get('/tambah', [Penawaran::class, 'tambah']);
         Route::post('/prosestambah', [Penawaran::class, 'prosestambah']);
         Route::get('/baca/{id}', [Penawaran::class, 'baca']);
         Route::get('/edit/{id}', [Penawaran::class, 'edit']);
@@ -89,7 +83,6 @@ Route::middleware([
     //Admin
     Route::group(['prefix' => 'admin'], function() {
         Route::get('/', [Admin::class, 'index']);
-        Route::get('/tambah', [Admin::class, 'tambah']);
         Route::post('/prosestambah', [Admin::class, 'prosestambah']);
         Route::get('/edit/{id}', [Admin::class, 'edit']);
         Route::patch('/prosesedit/{id}', [Admin::class, 'prosesedit']);

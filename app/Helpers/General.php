@@ -23,13 +23,31 @@ class General
 		public static function pesanSuksesForm($form_input='')
 		{
 			if($form_input != '')
-				echo '<div class="alert alert-success" role="alert">'.$form_input.'</div>';
+			{
+				echo '<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+						'.$form_input.'
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>';
+			}
 		}
 
 		public static function pesanFlashErrorForm($form_input = '')
 		{
 			if ($form_input != '')
-				echo '<div class="alert alert-danger" role="alert">' . $form_input . '</div>';
+			{
+				echo '<div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+						'.$form_input.'
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					</div>';
+			}
 		}
 
 		public static function validForm($alert="")
@@ -47,68 +65,42 @@ class General
 				</button>';
 		}
 
-		public static function reset()
-		{ 
-			echo '<button class="btn btn-sm btn-danger resetbutton" type="button">
-					<span class="cil-sync"></span> Reset
-				</button>';
+		public static function simpan($link = '')
+		{
+			echo  '<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-green pull-right" data-upgraded=",MaterialButton,MaterialRipple">
+                 	    <i class="material-icons">add</i>
+                 	    simpan
+                 	</button>';
 		}
 
-		public static function simpan()
-		{
-			echo '<button class="btn btn-sm btn-success" type="submit" name="simpan" value="simpan">
-					<span class="cil-plus"></span> Simpan
-				</button>';
-		}
-
-		public static function simpankembali()
-		{
-			echo '<button class="btn btn-sm btn-success active" type="submit" name="simpan_kembali" value="simpan_kembali">
-					<span class="cil-reload"></span> Simpan Kembali
-				</button>';
-		}
+		public static function edit($link) {
+			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-purple pull-right" data-upgraded=",MaterialButton,MaterialRipple">
+                    	<i class="material-icons">border_color</i>
+                	</a>';
+		} 
 
 		public static function perbarui()
 		{
-			echo '<button class="btn btn-sm btn-primary" type="submit">
-					<span class="cil-pencil"></span> Perbarui
-				</button>';
+			echo '<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-purple" data-upgraded=",MaterialButton,MaterialRipple">
+                	    <i class="material-icons">border_color</i>
+                	    Perbarui
+                	</button>';
 		}
 
-		public static function kembali($url_kembali='')
+		public static function batal($link='')
 		{
-			echo '<a class="btn btn-sm btn-danger" href="'.$url_kembali.'">
-					<span class="cil-ban"></span> Kembali
-				</a>';
-		}
+			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-red" data-upgraded=",MaterialButton,MaterialRipple">
+                	    <i class="material-icons">cancel</i>
+                	    Batal
+                	</a>';
 
-		public static function batal($url_kembali='')
-		{
-			echo '<a class="btn btn-sm btn-danger" href="'.$url_kembali.'">
-					<span class="cil-ban"></span> Batal
-				</a>';
-
-		}
-
-		public static function tambah($link = '')
-		{
-			echo  '<a href="' . URL($link) . '" class="btn btn-sm btn-success">
-						<span class="cil-plus"></span> Tambah
-					</a>';
-		}
-
-		public static function edit($link = '')
-		{
-			echo  '<a href="' . URL($link) . '" class="dropdown-item" style="color:#3399ff">
-						<span class="cil-pencil"></span> Edit
-					</a>';
 		}
 
 		public static function hapus($link = '', $label = '')
 		{
-			echo  '<button type="button" class="dropdown-item showModalHapus" style="color:#e55353" data-link="' . URL($link) . '" data-nama="' . $label . '">
-						<span class="cil-trash"></span> Hapus
-					</button>';
+			echo '<button type="button" class="showModalHapus mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-red pull-right" data-upgraded=",MaterialButton,MaterialRipple" data-link="' . URL($link) . '" data-nama="' . $label . '">
+                    	<i class="material-icons">delete</i>
+                    </button>';
 		}
 	//Tombol
 

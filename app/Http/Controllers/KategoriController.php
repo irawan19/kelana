@@ -29,70 +29,113 @@ class KategoriController extends Controller {
         return view('kategori.lihat', $data);
     }
 
-    public function tambah(Request $request) {
-        return view('kategori.tambah');
-    }
-
     public function prosestambah(Request $request) {
         $aturan = [
-            'nama_kategoris'             => 'required',
+            'nama'             => 'required|unique:kategoris,nama,NULL,id,deleted_at,NULL',
         ];
         $this->validate($request, $aturan);
 
-        $data = [
-            'nama_kategoris'     => $request->nama_kategoris,
-            'created_at'        => date('Y-m-d H:i:s'),
-        ];
+        $cek = Kategori::onlyTrashed()->where('nama',$request->nama)->first();
+        if (empty($cek)) {
+            $data = [
+                'nama'              => $request->nama,
+                'created_at'        => date('Y-m-d H:i:s'),
+            ];
+            Kategori::insert($data);
 
-        Kategori::insert($data);
-        
-        if(request()->session()->get('halaman') != '')
-            $redirect_halaman  = request()->session()->get('halaman');
-        else
-            $redirect_halaman  = 'kategori';
-
-        return redirect($redirect_halaman);
+            $setelah_simpan = [
+                'alert'                     => 'sukses',
+                'text'                      => 'Data '.$request->nama.' berhasil ditambahkan',
+            ];
+            return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+        } else {
+            $cek_exist = Kategori::where('nama',$request->nama)->count();
+            if($cek_exist == 0) {
+                Kategori::where('id',$cek->id)->restore();
+                
+                $setelah_simpan = [
+                    'alert'                     => 'sukses',
+                    'text'                      => 'Data '.$request->nama.' berhasil ditambahkan',
+                ];
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+            } else {
+                $setelah_simpan = [
+                    'alert'                     => 'error',
+                    'text'                      => 'Data '.$request->nama.' sudah ada',
+                ];
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+            }
+        }
     }
 
     public function edit(Request $request, $idkategori) {
-        $cek_kategoris = Kategori::find($idkategori);
-        if (!empty($cek_kategoris)) {
-            $data['kategoris'] = Kategori::find($idkategori);
-            return view('kategori.edit', $data);
+        $cek = Kategori::find($idkategori);
+        if (!empty($cek)) {
+            $hasil_kata             = session('hasil_kata');
+            $data['hasil_kata']     = $hasil_kata;
+            $data['kategoris']      = Kategori::Where('nama', 'LIKE', '%'.$hasil_kata.'%')
+                                                ->orderBy('nama')
+                                                ->paginate(10);
+            $data['edit_kategoris'] = Kategori::find($idkategori);
+            return view('kategori.lihat', $data);
         } else {
             return redirect('kategori');
         }
     }
 
     public function prosesedit(Request $request, $idkategori) {
-        $cek_kategoris = Kategori::find($idkategori);
-        if (!empty($cek_kategoris)) {
-            $aturan = [
-                'nama_kategoris'             => 'required',
-            ];
-            $this->validate($request, $aturan);
+        $cek = Kategori::find($idkategori);
+        if (!empty($cek)) {
+            $cek = Kategori::onlyTrashed()->where('nama',$request->nama)->first();
+            if (empty($cek)) {
+                $aturan = [
+                    'nama'             => 'required|unique:kategoris,nama,'.$idkategori.',id',
+                ];
+                $this->validate($request, $aturan);
 
-            $data = [
-                'nama_kategoris'     => $request->nama_kategoris,
-                'created_at'        => date('Y-m-d H:i:s'),
-            ];
-            
-            Kategori::find($idkategori)->update($data);
-            
-            if(request()->session()->get('halaman') != '')
-                $redirect_halaman  = request()->session()->get('halaman');
-            else
-                $redirect_halaman  = 'kategori';
+                $data = [
+                    'nama'              => $request->nama,
+                    'created_at'        => date('Y-m-d H:i:s'),
+                ];
+                
+                Kategori::find($idkategori)->update($data);
+                
+    
+                $setelah_simpan = [
+                    'alert'                     => 'sukses',
+                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
+                ];
 
-            return redirect($redirect_halaman);
+                if(request()->session()->get('halaman') != '') {
+                    $url = request()->session()->get('halaman');
+                    return redirect($url)->with('setelah_simpan', $setelah_simpan);
+                }
+                else
+                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+            } else {
+                Kategori::find($idkategori)->delete();
+
+                $data = [
+                    'nama'              => $request->nama,
+                    'created_at'        => date('Y-m-d H:i:s'),
+                ];
+                Kategori::insert($data);
+    
+                $setelah_simpan = [
+                    'alert'                     => 'sukses',
+                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
+                ];
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
+            }
+
         } else {
             return redirect('kategori');
         }
     }
 
     public function hapus($idkategori) {
-        $cek_kategoris = Kategori::find($idkategori);
-        if (!empty($cek_kategoris)) {
+        $cek = Kategori::find($idkategori);
+        if (!empty($cek)) {
             Kategori::find($idkategori)->delete();
             return response()->json(['sukses' => '"sukses'], 200);
         } else {
