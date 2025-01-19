@@ -4,35 +4,35 @@
         <div class="scroller" id="scroller">
             <div class="scroll__container" id="scroll__container">
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link mdl-navigation__link--current" href="index.html">
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == '' || Request::segment(1) == 'dashboard' ? 'current' : '' }}" href="{{ URL('/') }}">
                         <i class="material-icons" role="presentation">dashboard</i>
                         Dashboard
                     </a>
-                    <a class="mdl-navigation__link" href="{{URL('/kategori')}}">
-                        <i class="material-icons">label</i>
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'kategori' ? 'current' : '' }}" href="{{URL('/kategori')}}">
+                        <i class="material-icons" role="presentation">label</i>
                         Kategori
                     </a>
-                    <a class="mdl-navigation__link" href="{{URL('/tipe')}}">
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'tipe' ? 'current' : '' }}" href="{{URL('/tipe')}}">
                         <i class="material-icons" role="presentation">person</i>
                         Tipe
                     </a>
-                    <a class="mdl-navigation__link" href="{{URL('/merk')}}">
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'merk' ? 'current' : '' }}" href="{{URL('/merk')}}">
                         <i class="material-icons" role="presentation">toll</i>
                         Merk
                     </a>
-                    <a class="mdl-navigation__link" href="{{URL('/barang')}}">
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'barang' ? 'current' : '' }}" href="{{URL('/barang')}}">
                         <i class="material-icons">list</i>
                         Barang
                     </a>
-                    <a class="mdl-navigation__link" href="{{URL('/supplier')}}">
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'supplier' ? 'current' : '' }}" href="{{URL('/supplier')}}">
                         <i class="material-icons">account_box</i>
                         Supplier
                     </a>
-                    <a class="mdl-navigation__link" href="{{URL('/book')}}">
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'book' ? 'current' : '' }}" href="{{URL('/book')}}">
                         <i class="material-icons">book</i>
                         Penawaran
                     </a>
-                    <a class="mdl-navigation__link" href="{{URL('/admin')}}">
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'admin' ? 'current' : '' }}" href="{{URL('/admin')}}">
                         <i class="material-icons">supervisor_account</i>
                         Admin
                     </a>

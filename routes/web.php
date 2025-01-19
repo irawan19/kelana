@@ -26,7 +26,7 @@ Route::middleware([
     Route::get('/akun', [Akun::class, 'index']);
 
     //Kategori
-    Route::group(['prefix' => 'Kategori'], function() {
+    Route::group(['prefix' => 'kategori'], function() {
         Route::get('/', [Kategori::class, 'index']);
         Route::get('/tambah', [Kategori::class, 'tambah']);
         Route::post('/prosestambah', [Kategori::class, 'prosestambah']);
@@ -36,7 +36,7 @@ Route::middleware([
     });
 
     //Tipe
-    Route::group(['prefix' => 'Tipe'], function() {
+    Route::group(['prefix' => 'tipe'], function() {
         Route::get('/', [Tipe::class, 'index']);
         Route::get('/tambah', [Tipe::class, 'tambah']);
         Route::post('/prosestambah', [Tipe::class, 'prosestambah']);
@@ -46,7 +46,7 @@ Route::middleware([
     });
 
     //Merk
-    Route::group(['prefix' => 'Merk'], function() {
+    Route::group(['prefix' => 'merk'], function() {
         Route::get('/', [Merk::class, 'index']);
         Route::get('/tambah', [Merk::class, 'tambah']);
         Route::post('/prosestambah', [Merk::class, 'prosestambah']);
@@ -56,7 +56,7 @@ Route::middleware([
     });
 
     //Barang
-    Route::group(['prefix' => 'Barang'], function() {
+    Route::group(['prefix' => 'barang'], function() {
         Route::get('/', [Barang::class, 'index']);
         Route::get('/tambah', [Barang::class, 'tambah']);
         Route::post('/prosestambah', [Barang::class, 'prosestambah']);
@@ -66,7 +66,7 @@ Route::middleware([
     });
 
     //Supplier
-    Route::group(['prefix' => 'Supplier'], function() {
+    Route::group(['prefix' => 'supplier'], function() {
         Route::get('/', [Supplier::class, 'index']);
         Route::get('/tambah', [Supplier::class, 'tambah']);
         Route::post('/prosestambah', [Supplier::class, 'prosestambah']);
@@ -76,7 +76,7 @@ Route::middleware([
     });
 
     //Penawaran
-    Route::group(['prefix' => 'Penawaran'], function() {
+    Route::group(['prefix' => 'penawaran'], function() {
         Route::get('/', [Penawaran::class, 'index']);
         Route::get('/tambah', [Penawaran::class, 'tambah']);
         Route::post('/prosestambah', [Penawaran::class, 'prosestambah']);
@@ -87,7 +87,7 @@ Route::middleware([
     });
 
     //Admin
-    Route::group(['prefix' => 'Admin'], function() {
+    Route::group(['prefix' => 'admin'], function() {
         Route::get('/', [Admin::class, 'index']);
         Route::get('/tambah', [Admin::class, 'tambah']);
         Route::post('/prosestambah', [Admin::class, 'prosestambah']);
