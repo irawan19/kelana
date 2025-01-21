@@ -117,7 +117,17 @@
                                         <label class="mdl-textfield__label" for="merks_id">Merk</label>
                                         <select class="form-control select2" id="merks_id" name="merks_id">
                                             @foreach($merks as $merk)
-                                                <option value="{{ $merk->id }}" {{ Request::old('merks_id') == $merk->id ? $select='selected' : $select='' }}>{{ $merk->nama }}</option>
+                                                @php($selected = '')
+                                                @if(Request::old('merks_id') == '')
+                                                    @if($merk->id == $edit_tipes->merks_id)
+                                                        @php($selected = 'selected')
+                                                    @endif
+                                                @else
+                                                    @if($merk->id == Request::old('merks_id'))
+                                                        @php($selected = 'selected')
+                                                    @endif
+                                                @endif
+                                                <option value="{{ $merk->id }}" {{ $selected }}>{{ $merk->nama }}</option>
                                             @endforeach
                                         </select>
                                     </div>
