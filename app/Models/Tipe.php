@@ -10,4 +10,11 @@ class Tipe extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected $table = 'tipes';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'nama'
+    ];
 }

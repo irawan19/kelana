@@ -14,6 +14,19 @@
 					@if (Session::get('setelah_simpan.alert') == 'error')
 						{{ App\Helpers\General::pesanFlashErrorForm(Session::get('setelah_simpan.text')) }}
 					@endif
+
+                    <div class="mdl-card__actions">
+                        <form method="GET" action="{{ URL('kategori/cari') }}">
+                            @csrf
+                            <div class="input-group">
+                                <input class="form-control" id="input2-group2" type="text" name="cari_kata" placeholder="Cari" value="{{$hasil_kata}}">
+                                <span class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"> Cari</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+
                     <table class="mdl-data-table mdl-js-data-table stripped-table">
                         <thead>
                         <tr>
@@ -58,7 +71,7 @@
 
         <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-col-tablet mdl-cell--12-col-phone">
             <div class="mdl-card mdl-shadow--2dp">
-                @if (Request::segment(2) == '')
+                @if (Request::segment(2) != 'edit')
                     <div class="mdl-card__title">
                         <h1 class="mdl-card__title-text">Tambah</h1>
                     </div>

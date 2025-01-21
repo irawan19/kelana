@@ -68,28 +68,28 @@ class KategoriController extends Controller {
         }
     }
 
-    public function edit(Request $request, $idkategori) {
-        $cek = Kategori::find($idkategori);
+    public function edit(Request $request, $id) {
+        $cek = Kategori::find($id);
         if (!empty($cek)) {
             $hasil_kata             = session('hasil_kata');
             $data['hasil_kata']     = $hasil_kata;
             $data['kategoris']      = Kategori::Where('nama', 'LIKE', '%'.$hasil_kata.'%')
                                                 ->orderBy('nama')
                                                 ->paginate(10);
-            $data['edit_kategoris'] = Kategori::find($idkategori);
+            $data['edit_kategoris'] = Kategori::find($id);
             return view('kategori.lihat', $data);
         } else {
             return redirect('kategori');
         }
     }
 
-    public function prosesedit(Request $request, $idkategori) {
-        $cek = Kategori::find($idkategori);
+    public function prosesedit(Request $request, $id) {
+        $cek = Kategori::find($id);
         if (!empty($cek)) {
             $cek = Kategori::onlyTrashed()->where('nama',$request->nama)->first();
             if (empty($cek)) {
                 $aturan = [
-                    'nama'             => 'required|unique:kategoris,nama,'.$idkategori.',id',
+                    'nama'             => 'required|unique:kategoris,nama,'.$id.',id',
                 ];
                 $this->validate($request, $aturan);
 
@@ -98,9 +98,8 @@ class KategoriController extends Controller {
                     'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 
-                Kategori::find($idkategori)->update($data);
+                Kategori::find($id)->update($data);
                 
-    
                 $setelah_simpan = [
                     'alert'                     => 'sukses',
                     'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
@@ -113,7 +112,7 @@ class KategoriController extends Controller {
                 else
                     return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             } else {
-                Kategori::find($idkategori)->delete();
+                Kategori::find($id)->delete();
 
                 $data = [
                     'nama'              => $request->nama,
@@ -133,10 +132,10 @@ class KategoriController extends Controller {
         }
     }
 
-    public function hapus($idkategori) {
-        $cek = Kategori::find($idkategori);
+    public function hapus($id) {
+        $cek = Kategori::find($id);
         if (!empty($cek)) {
-            Kategori::find($idkategori)->delete();
+            Kategori::find($id)->delete();
             return response()->json(['sukses' => '"sukses'], 200);
         } else {
             return redirect('kategori');

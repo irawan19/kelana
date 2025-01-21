@@ -12,13 +12,13 @@
                         <i class="material-icons" role="presentation">label</i>
                         Kategori
                     </a>
-                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'tipe' ? 'current' : '' }}" href="{{URL('/tipe')}}">
-                        <i class="material-icons" role="presentation">person</i>
-                        Tipe
-                    </a>
                     <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'merk' ? 'current' : '' }}" href="{{URL('/merk')}}">
                         <i class="material-icons" role="presentation">toll</i>
                         Merk
+                    </a>
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'tipe' ? 'current' : '' }}" href="{{URL('/tipe')}}">
+                        <i class="material-icons" role="presentation">person</i>
+                        Tipe
                     </a>
                     <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'barang' ? 'current' : '' }}" href="{{URL('/barang')}}">
                         <i class="material-icons">list</i>

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tipes', function (Blueprint $table) {
             $table->id('id');
+            $table->bigInteger('merks_id')->unsigned()->index()->nullable();
+            $table->foreign('merks_id')->references('id')->on('merks')->onUpdate('set null')->onDelete('set null');
             $table->string('nama')->unique();
             $table->timestamps();
             $table->softDeletes();

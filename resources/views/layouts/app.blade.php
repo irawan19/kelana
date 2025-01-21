@@ -21,8 +21,17 @@
     <link rel="stylesheet" href="{{ URL::asset('template/css/lib/getmdl-select.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('template/css/lib/nv.d3.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('template/css/application.min.css') }}">
+	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('template/vendors/select2/dist/css/select2.min.css')}}}" />
     <link rel="stylesheet" href="{{ URL::asset('template/css/custom.css') }}">
     <script src="{{ URL::asset('template/js/jquery-3.7.1.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            //Select2
+                $('.select2').select2({
+                    width: '100%',
+                });
+        });
+    </script>
 </head>
 <body>
 
@@ -55,6 +64,7 @@
 <script src="{{ URL::asset('template/js/widgets/todo/todo.min.js') }}"></script>
 <script src="{{URL::asset('template/vendors/sweetalert2/dist/sweetalert2.min.js')}}"></script>
 <script src="{{URL::asset('template/vendors/sweetalert2/sweet-alert.init.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('template/vendors/select2/dist/js/select2.full.min.js') }}"></script>
 <script>
     jQuery(document).ready(function () {
         //Sweet Alert

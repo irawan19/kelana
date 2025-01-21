@@ -10,4 +10,11 @@ class Merk extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected $table = 'merks';
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'nama'
+    ];
 }
