@@ -110,14 +110,14 @@ class TipeController extends Controller {
     public function prosesedit(Request $request, $id) {
         $cek = Tipe::find($id);
         if (!empty($cek)) {
+            $aturan = [
+                'merks_id'          => 'required',
+                'nama'              => 'required|unique:tipes,nama,'.$id.',id',
+            ];
+            $this->validate($request, $aturan);
+            
             $cek = Tipe::onlyTrashed()->where('nama',$request->nama)->first();
             if (empty($cek)) {
-                $aturan = [
-                    'merks_id'          => 'required',
-                    'nama'              => 'required|unique:tipes,nama,'.$id.',id',
-                ];
-                $this->validate($request, $aturan);
-
                 $data = [
                     'merks_id'          => $request->merks_id,
                     'nama'              => $request->nama,

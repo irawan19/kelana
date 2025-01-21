@@ -87,12 +87,13 @@ class MerkController extends Controller {
     public function prosesedit(Request $request, $id) {
         $cek = Merk::find($id);
         if (!empty($cek)) {
+            $aturan = [
+                'nama'             => 'required|unique:merks,nama,'.$id.',id',
+            ];
+            $this->validate($request, $aturan);
+            
             $cek = Merk::onlyTrashed()->where('nama',$request->nama)->first();
             if (empty($cek)) {
-                $aturan = [
-                    'nama'             => 'required|unique:merks,nama,'.$id.',id',
-                ];
-                $this->validate($request, $aturan);
 
                 $data = [
                     'nama'              => $request->nama,

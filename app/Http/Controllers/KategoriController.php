@@ -86,13 +86,13 @@ class KategoriController extends Controller {
     public function prosesedit(Request $request, $id) {
         $cek = Kategori::find($id);
         if (!empty($cek)) {
+            $aturan = [
+                'nama'             => 'required|unique:kategoris,nama,'.$id.',id',
+            ];
+            $this->validate($request, $aturan);
+
             $cek = Kategori::onlyTrashed()->where('nama',$request->nama)->first();
             if (empty($cek)) {
-                $aturan = [
-                    'nama'             => 'required|unique:kategoris,nama,'.$id.',id',
-                ];
-                $this->validate($request, $aturan);
-
                 $data = [
                     'nama'              => $request->nama,
                     'created_at'        => date('Y-m-d H:i:s'),
