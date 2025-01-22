@@ -22,7 +22,7 @@ class PenawaranController extends Controller {
         $hasil_kata                     = $request->cari_kata;
         $data['hasil_kata']             = $hasil_kata;
         $url_sekarang                   = $request->fullUrl();
-        $data['penawarans']             = Penawaran::Penawaran::Where('nama', 'LIKE', '%'.$hasil_kata.'%')
+        $data['penawarans']             = Penawaran::Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orderBy('no')
                                                     ->paginate(10);
         session(['hasil_kata'		    => $hasil_kata]);
@@ -32,16 +32,19 @@ class PenawaranController extends Controller {
 
     public function prosestambah(Request $request) {
         $aturan = [
-            'nama'             => 'required|unique:penawarans,nama,NULL,id,deleted_at,NULL',
+            'nama'              => 'required',
+            'perusahaan'        => 'required',
+            'alamat'            => 'required',
         ];
         $this->validate($request, $aturan);
 
         $cek = Penawaran::onlyTrashed()->where('nama',$request->nama)->first();
         if (empty($cek)) {
             $data = [
-                'no'                => $request->no,
+                'no'                => \App\Helpers\General::generateNoPenawaran(),
                 'nama'              => $request->nama,
                 'perusahaan'        => $request->perusahaan,
+                'alamat'            => $request->alamat,
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
             Penawaran::insert($data);
@@ -90,7 +93,9 @@ class PenawaranController extends Controller {
         $cek = Penawaran::find($id);
         if (!empty($cek)) {
             $aturan = [
-                'nama'             => 'required|unique:penawarans,nama,'.$id.',id',
+                'nama'              => 'required',
+                'perusahaan'        => 'required',
+                'alamat'            => 'required',
             ];
             $this->validate($request, $aturan);
             
@@ -99,6 +104,8 @@ class PenawaranController extends Controller {
 
                 $data = [
                     'nama'              => $request->nama,
+                    'perusahaan'        => $request->perusahaan,
+                    'alamat'            => $request->alamat,
                 ];
                 
                 Penawaran::find($id)->update($data);
@@ -119,6 +126,8 @@ class PenawaranController extends Controller {
 
                 $data = [
                     'nama'              => $request->nama,
+                    'perusahaan'        => $request->perusahaan,
+                    'alamat'            => $request->alamat,
                 ];
                 Penawaran::insert($data);
     

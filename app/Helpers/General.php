@@ -4,6 +4,7 @@ namespace App\Helpers;
 use Auth;
 use Datetime;
 use URL;
+use App\Models\Penawaran;
 
 class General 
 {
@@ -77,7 +78,7 @@ class General
 			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-purple pull-right" data-upgraded=",MaterialButton,MaterialRipple">
                     	<i class="material-icons">border_color</i>
                 	</a>';
-		} 
+		}
 
 		public static function perbarui()
 		{
@@ -101,6 +102,12 @@ class General
 			echo '<button type="button" class="showModalHapus mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-red pull-right" data-upgraded=",MaterialButton,MaterialRipple" data-link="' . URL($link) . '" data-nama="' . $label . '">
                     	<i class="material-icons">delete</i>
                     </button>';
+		}
+
+		public static function cetak($link) {
+			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-green pull-right" data-upgraded=",MaterialButton,MaterialRipple">
+                    	<i class="material-icons">print</i>
+                	</a>';
 		}
 	//Tombol
 
@@ -152,6 +159,32 @@ class General
 	{
 		$harga_ke_db = preg_replace("/([^0-9\\.])/i", "", $harga);
 		return $harga_ke_db;
+	}
+
+
+	public static function generateNoPenawaran()
+	{
+		$ambil_penawarans = Penawaran::select('no')
+								->whereRaw('YEAR(created_at) = "'.date('Y').'"')
+								->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(no,"/",1),"/",-1) AS SIGNED) desc')
+								->first();
+		if(!empty($ambil_penawarans))
+		{
+			$no 						= $ambil_penawarans->no;
+			$explode_no 				= explode('/', $no);
+			if(!empty($explode_no[1]))
+			{
+				$no_new 					= (int)$explode_no[1] + 1;
+				$format_no_new 				= sprintf('%03d', $no_new);
+				$format_penawarans_new 		= $format_no_new.' / PKG / I /'.date('Y').' - SP';
+			}
+			else
+				$format_penawarans_new 		= '001 / PKG / I / '.date('Y').' - SP';
+		}
+		else
+			$format_penawarans_new 		= '001 / PKG / I / '.date('Y').' - SP';
+
+		return $format_penawarans_new;
 	}
     
 }

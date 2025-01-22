@@ -95,6 +95,20 @@
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                             </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="perusahaan" name="perusahaan" value="{{ Request::old('perusahaan') }}" />
+                                    <label class="mdl-textfield__label" for="perusahaan">Perusahaan</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('perusahaan'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="alamat" name="alamat" value="{{ Request::old('alamat') }}" />
+                                    <label class="mdl-textfield__label" for="alamat">Alamat</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('alamat'))}}
+                            </div>
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
                             </div>
@@ -110,10 +124,31 @@
                             @method('PATCH')
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') == '' ? $edit_penawarans->nama : Request::old('nama') }}" autofocus />
+                                    <input readonly class="readonlycolor mdl-textfield__input" type="text" id="no" name="no" value="{{ Request::old('no') == '' ? $edit_penawarans->no : Request::old('no') }}" />
+                                    <label class="mdl-textfield__label" for="no">No</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('no'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') == '' ? $edit_penawarans->nama : Request::old('nama') }}" />
                                     <label class="mdl-textfield__label" for="nama">Nama</label>
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="perusahaan" name="perusahaan" value="{{ Request::old('perusahaan') == '' ? $edit_penawarans->perusahaan : Request::old('perusahaan') }}" />
+                                    <label class="mdl-textfield__label" for="perusahaan">Perusahaan</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('perusahaan'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="alamat" name="alamat" value="{{ Request::old('alamat') == '' ? $edit_penawarans->alamat : Request::old('alamat') }}" />
+                                    <label class="mdl-textfield__label" for="alamat">Alamat</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('alamat'))}}
                             </div>
                             <div class="mdl-card__actions right-align">
                                 @if(request()->session()->get('halaman') != '')
