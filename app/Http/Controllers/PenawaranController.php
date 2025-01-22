@@ -146,6 +146,7 @@ class PenawaranController extends Controller {
     public function hapus($id) {
         $cek = Penawaran::find($id);
         if (!empty($cek)) {
+            Penawaran_barang::where('penawarans_id',$id)->delete();
             Penawaran::find($id)->delete();
             return response()->json(['sukses' => '"sukses'], 200);
         } else {

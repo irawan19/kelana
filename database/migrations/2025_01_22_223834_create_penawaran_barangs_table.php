@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('penawaran_barangs', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('penawarans_id')->unsigned()->index()->nullable();
+            $table->foreign('penawarans_id')->references('id')->on('penawarans')->onUpdate('set null')->onDelete('set null');
             $table->bigInteger('barangs_id')->unsigned()->index()->nullable();
             $table->foreign('barangs_id')->references('id')->on('barangs')->onUpdate('set null')->onDelete('set null');
             $table->double('harga');
