@@ -117,3 +117,7 @@
     --cui-pagination-font-size: 0.875rem;
     --cui-pagination-border-radius: var(--cui-border-radius-sm);
   }
+
+  .text_info{
+    color: #ffc107 !important;
+  }

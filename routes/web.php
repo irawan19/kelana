@@ -23,7 +23,10 @@ Route::middleware([
     Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
 
     //Akun
-    Route::get('/akun', [Akun::class, 'index']);
+    Route::group(['prefix' => 'akun'], function() {
+        Route::get('/', [Akun::class, 'index']);
+        Route::patch('/prosesedit', [Akun::class, 'prosesedit']);
+    });
 
     //Kategori
     Route::group(['prefix' => 'kategori'], function() {

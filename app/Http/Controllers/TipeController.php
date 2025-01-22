@@ -121,7 +121,6 @@ class TipeController extends Controller {
                 $data = [
                     'merks_id'          => $request->merks_id,
                     'nama'              => $request->nama,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 
                 Tipe::find($id)->update($data);
@@ -142,7 +141,6 @@ class TipeController extends Controller {
 
                 $data = [
                     'nama'              => $request->nama,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 Tipe::insert($data);
     

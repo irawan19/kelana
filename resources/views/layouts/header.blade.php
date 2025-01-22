@@ -2,7 +2,7 @@
     <div class="mdl-layout__header-row">
         <div class="mdl-layout-spacer"></div>
         <div class="avatar-dropdown" id="icon">
-            <span>{{ Auth::user()->username }}</span>
+            <span>{{ Auth::user()->name }}</span>
             @if(Auth::user()->profile_photo_path == null)
                 <img src="{{ Auth::user()->profile_photo_url }}" alt="{{Auth::user()->email}}">
             @else
@@ -13,7 +13,6 @@
             for="icon">
             <li class="mdl-list__item mdl-list__item--two-line">
                 <span class="mdl-list__item-primary-content">
-                    <span class="material-icons mdl-list__item-avatar"></span>
                     <span>{{ Auth::user()->username }}</span>
                     <span class="mdl-list__item-sub-title">{{ Auth::user()->email }}</span>
                 </span>

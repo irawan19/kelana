@@ -97,7 +97,6 @@ class MerkController extends Controller {
 
                 $data = [
                     'nama'              => $request->nama,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 
                 Merk::find($id)->update($data);
@@ -118,7 +117,6 @@ class MerkController extends Controller {
 
                 $data = [
                     'nama'              => $request->nama,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 Merk::insert($data);
     

@@ -95,7 +95,6 @@ class KategoriController extends Controller {
             if (empty($cek)) {
                 $data = [
                     'nama'              => $request->nama,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 
                 Kategori::find($id)->update($data);
@@ -116,7 +115,6 @@ class KategoriController extends Controller {
 
                 $data = [
                     'nama'              => $request->nama,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 Kategori::insert($data);
     

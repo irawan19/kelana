@@ -173,7 +173,6 @@ class BarangController extends Controller {
                     'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
                     'harga_beli'        => General::ubahHargaKeDB($request->harga_beli),
                     'stok'              => $request->stok,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 
                 Barang::find($id)->update($data);
@@ -199,7 +198,6 @@ class BarangController extends Controller {
                     'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
                     'harga_beli'        => General::ubahHargaKeDB($request->harga_beli),
                     'stok'              => $request->stok,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
                 Barang::insert($data);
     
