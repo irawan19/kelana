@@ -118,19 +118,22 @@
                                         <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') }}" autofocus />
                                         <label class="mdl-textfield__label" for="nama">Nama</label>
                                     </div>
+                                    {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                                     <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') }}" autofocus />
+                                        <input class="mdl-textfield__input priceformat" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga_jual') }}" />
                                         <label class="mdl-textfield__label" for="harga_jual">Harga Jual</label>
                                     </div>
+                                    {{\App\Helpers\General::pesanErrorForm($errors->first('harga_jual'))}}
                                     <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="harga_beli" name="harga_beli" value="{{ Request::old('harga_beli') }}" autofocus />
+                                        <input class="mdl-textfield__input priceformat" type="text" id="harga_beli" name="harga_beli" value="{{ Request::old('harga_beli') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga_beli') }}" />
                                         <label class="mdl-textfield__label" for="harga_beli">Harga Beli</label>
                                     </div>
+                                    {{\App\Helpers\General::pesanErrorForm($errors->first('harga_beli'))}}
                                     <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="number" id="stok" name="stok" value="{{ Request::old('stok') }}" autofocus />
+                                        <input class="mdl-textfield__input" type="number" id="stok" name="stok" value="{{ Request::old('stok') }}" />
                                         <label class="mdl-textfield__label" for="stok">Stok</label>
                                     </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
+                                    {{\App\Helpers\General::pesanErrorForm($errors->first('stok'))}}
                                 </div>
                             </div>
                             <div class="mdl-card__actions">
@@ -146,31 +149,65 @@
                         <form action="{{ URL('barang/prosesedit/'.$edit_barangs->id) }}" class="form" method="POST">
                             {{ csrf_field() }}
                             @method('PATCH')
-                            <div class="form__article">
                                 <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <label class="mdl-textfield__label" for="kategoris_id">Kategori</label>
-                                        <select class="form-control select2" id="kategoris_id" name="kategoris_id">
-                                            @foreach($kategoris as $kategori)
-                                                @php($selected = '')
-                                                @if(Request::old('kategoris_id') == '')
-                                                    @if($kategori->id == $edit_barangs->kategoris_id)
-                                                        @php($selected = 'selected')
+                                    <div class="form__article">
+                                        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <label class="mdl-textfield__label" for="kategoris_id">Kategori</label>
+                                            <select class="form-control select2" id="kategoris_id" name="kategoris_id">
+                                                @foreach($kategoris as $kategori)
+                                                    @php($selected = '')
+                                                    @if(Request::old('kategoris_id') == '')
+                                                        @if($kategori->id == $edit_barangs->kategoris_id)
+                                                            @php($selected = 'selected')
+                                                        @endif
+                                                    @else
+                                                        @if($kategori->id == Request::old('kategoris_id'))
+                                                            @php($selected = 'selected')
+                                                        @endif
                                                     @endif
-                                                @else
-                                                    @if($kategori->id == Request::old('kategoris_id'))
-                                                        @php($selected = 'selected')
+                                                    <option value="{{ $kategori->id }}" {{ $selected }}>{{ $kategori->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <label class="mdl-textfield__label" for="tipes_id">Tipe</label>
+                                            <select class="form-control select2" id="tipes_id" name="tipes_id">
+                                                @foreach($tipes as $tipe)
+                                                    @php($selected = '')
+                                                    @if(Request::old('tipes_id') == '')
+                                                        @if($tipe->id == $edit_barangs->tipes_id)
+                                                            @php($selected = 'selected')
+                                                        @endif
+                                                    @else
+                                                        @if($tipe->id == Request::old('tipes_id'))
+                                                            @php($selected = 'selected')
+                                                        @endif
                                                     @endif
-                                                @endif
-                                                <option value="{{ $kategori->id }}" {{ $selected }}>{{ $kategori->nama }}</option>
-                                            @endforeach
-                                        </select>
+                                                    <option value="{{ $tipe->id_tipes }}" {{ $selected }}>{{ $tipe->nama_merks .' - '. $tipe->nama_tipes }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') == '' ? $edit_barangs->nama : Request::old('nama') }}" autofocus />
+                                            <label class="mdl-textfield__label" for="nama">Nama</label>
+                                        </div>
+                                        {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
+                                        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input class="mdl-textfield__input priceformat" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') == '' ? \App\Helpers\General::ubahDBKeHarga($edit_barangs->harga_jual) : Request::old('harga_jual') }}" autofocus />
+                                            <label class="mdl-textfield__label" for="harga_jual">Harga Jual</label>
+                                        </div>
+                                        {{\App\Helpers\General::pesanErrorForm($errors->first('harga_jual'))}}
+                                        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input class="mdl-textfield__input priceformat" type="text" id="harga_beli" name="harga_beli" value="{{ Request::old('harga_beli') == '' ? \App\Helpers\General::ubahDBKeHarga($edit_barangs->harga_beli) : Request::old('harga_beli') }}" autofocus />
+                                            <label class="mdl-textfield__label" for="harga_beli">Harga Beli</label>
+                                        </div>
+                                        {{\App\Helpers\General::pesanErrorForm($errors->first('harga_beli'))}}
+                                        <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input class="mdl-textfield__input" type="number" id="stok" name="stok" value="{{ Request::old('stok') == '' ? $edit_barangs->stok : Request::old('stok') }}" />
+                                            <label class="mdl-textfield__label" for="stok">Stok</label>
+                                        </div>
+                                        {{\App\Helpers\General::pesanErrorForm($errors->first('stok'))}}
                                     </div>
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') == '' ? $edit_barangs->nama : Request::old('nama') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="nama">Nama</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                                 </div>
                             </div>
                             <div class="mdl-card__actions right-align">

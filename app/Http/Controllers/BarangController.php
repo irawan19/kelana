@@ -86,8 +86,8 @@ class BarangController extends Controller {
                 'kategoris_id'      => $request->kategoris_id,
                 'tipes_id'          => $request->tipes_id,
                 'nama'              => $request->nama,
-                'harga_jual'        => $request->harga_jual,
-                'harga_beli'        => $request->harga_beli,
+                'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                'harga_beli'        => General::ubahHargaKeDB($request->harga_beli),
                 'stok'              => $request->stok,
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
@@ -137,6 +137,7 @@ class BarangController extends Controller {
                                             ->orderBy('barangs.nama')
                                             ->paginate(10);
             $data['edit_barangs']   = Barang::find($id);
+            $data['kategoris']              = Kategori::orderBy('nama')->get();
             $data['tipes']          = Tipe::selectRaw('tipes.id as id_tipes,
                                                         tipes.nama as nama_tipes,
                                                         merks.id as id_merks,
@@ -153,11 +154,10 @@ class BarangController extends Controller {
     public function prosesedit(Request $request, $id) {
         $cek = Barang::find($id);
         if (!empty($cek)) {
-
             $aturan = [
                 'kategoris_id'      => 'required',
                 'tipes_id'          => 'required',
-                'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
+                'nama'              => 'required|unique:merks,nama,'.$id.',id',
                 'harga_jual'        => 'required',
                 'harga_beli'        => 'required',
                 'stok'              => 'required',
@@ -170,8 +170,8 @@ class BarangController extends Controller {
                     'kategoris_id'      => $request->kategoris_id,
                     'tipes_id'          => $request->tipes_id,
                     'nama'              => $request->nama,
-                    'harga_jual'        => $request->harga_jual,
-                    'harga_beli'        => $request->harga_beli,
+                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                    'harga_beli'        => General::ubahHargaKeDB($request->harga_beli),
                     'stok'              => $request->stok,
                     'created_at'        => date('Y-m-d H:i:s'),
                 ];
@@ -196,8 +196,8 @@ class BarangController extends Controller {
                     'kategoris_id'      => $request->kategoris_id,
                     'tipes_id'          => $request->tipes_id,
                     'nama'              => $request->nama,
-                    'harga_jual'        => $request->harga_jual,
-                    'harga_beli'        => $request->harga_beli,
+                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                    'harga_beli'        => General::ubahHargaKeDB($request->harga_beli),
                     'stok'              => $request->stok,
                     'created_at'        => date('Y-m-d H:i:s'),
                 ];

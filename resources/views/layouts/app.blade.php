@@ -30,6 +30,12 @@
                 $('.select2').select2({
                     width: '100%',
                 });
+
+	        //Price
+            $('.priceformat').priceFormat({
+	                clearPrefix: true,
+		        	allowNegative: true,
+	            });
         });
     </script>
 </head>
@@ -65,6 +71,7 @@
 <script src="{{URL::asset('template/vendors/sweetalert2/dist/sweetalert2.min.js')}}"></script>
 <script src="{{URL::asset('template/vendors/sweetalert2/sweet-alert.init.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('template/vendors/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ URL::asset('template/vendors/price/jquery.price.js') }}"></script>
 <script>
     jQuery(document).ready(function () {
         //Sweet Alert
