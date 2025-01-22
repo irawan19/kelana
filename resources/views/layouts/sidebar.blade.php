@@ -28,7 +28,7 @@
                         <i class="material-icons">account_box</i>
                         Supplier
                     </a>
-                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'book' ? 'current' : '' }}" href="{{URL('/book')}}">
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'penawaran' ? 'current' : '' }}" href="{{URL('/penawaran')}}">
                         <i class="material-icons">book</i>
                         Penawaran
                     </a>

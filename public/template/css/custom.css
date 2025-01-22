@@ -121,3 +121,8 @@
   .text_info{
     color: #ffc107 !important;
   }
+
+  .jam{
+    font-size:16px;
+    margin-left: 220px;
+  }

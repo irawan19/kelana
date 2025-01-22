@@ -1,5 +1,6 @@
 <header class="mdl-layout__header">
     <div class="mdl-layout__header-row">
+        <b class="jam">{{\App\Helpers\General::ubahDBKeTanggal(date('Y-m-d'))}}, <onload="timeJavascript()" id="output"></b>
         <div class="mdl-layout-spacer"></div>
         <div class="avatar-dropdown" id="icon">
             <span>{{ Auth::user()->name }}</span>
@@ -38,3 +39,13 @@
         </ul>
     </div>
 </header>
+
+<script type="text/javascript">
+	window.setTimeout("timeJavascript()",1000);
+    function timeJavascript()
+	{     
+        var dateNow = new Date().toLocaleTimeString("en-US",{timeZone: "Asia/Jakarta", hour12: false});
+        setTimeout("timeJavascript()",1000);
+        document.getElementById("output").innerHTML = dateNow;
+	}
+</script>

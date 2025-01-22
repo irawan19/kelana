@@ -87,6 +87,7 @@ Route::middleware([
         Route::get('/edit/{id}', [Penawaran::class, 'edit']);
         Route::patch('/prosesedit/{id}', [Penawaran::class, 'prosesedit']);
         Route::delete('/hapus/{id}', [Penawaran::class, 'hapus']);
+        Route::get('/cetak/{id}', [Penawaran::class, 'cetak']);
     });
 
     //Admin
