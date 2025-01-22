@@ -25,14 +25,14 @@
                                     <li class="mdl-list__item">
                                         <span class="mdl-list__item-primary-content list__item-text">{{$barang->nama}}</span>
                                         <span class="mdl-list__item-secondary-content">
-                                            <i class="material-icons newlable" role="presentation">fiber_new</i>
+                                            <i class="material-icons newlable1" role="presentation">fiber_new</i>
                                         </span>
                                     </li>
                                 @else
                                     <li class="mdl-list__item list__item--border-top">
                                         <span class="mdl-list__item-primary-content list__item-text">{{$barang->nama}}</span>
                                         <span class="mdl-list__item-secondary-content">
-                                            <i class="material-icons newlable" role="presentation">fiber_new</i>
+                                            <i class="material-icons newlable1" role="presentation">fiber_new</i>
                                         </span>
                                     </li>
                                 @endif
@@ -65,14 +65,14 @@
                                     <li class="mdl-list__item">
                                         <span class="mdl-list__item-primary-content list__item-text">{{$supplier->nama}}</span>
                                         <span class="mdl-list__item-secondary-content">
-                                            <i class="material-icons newlable" role="presentation">fiber_new</i>
+                                            <i class="material-icons newlable2" role="presentation">fiber_new</i>
                                         </span>
                                     </li>
                                 @else
                                     <li class="mdl-list__item list__item--border-top">
                                         <span class="mdl-list__item-primary-content list__item-text">{{$supplier->nama}}</span>
                                         <span class="mdl-list__item-secondary-content">
-                                            <i class="material-icons newlable" role="presentation">fiber_new</i>
+                                            <i class="material-icons newlable2" role="presentation">fiber_new</i>
                                         </span>
                                     </li>
                                 @endif
@@ -105,14 +105,14 @@
                                     <li class="mdl-list__item">
                                         <span class="mdl-list__item-primary-content list__item-text">{{$penawaran->no}}</span>
                                         <span class="mdl-list__item-secondary-content">
-                                            <i class="material-icons newlable" role="presentation">fiber_new</i>
+                                            <i class="material-icons newlable3" role="presentation">fiber_new</i>
                                         </span>
                                     </li>
                                 @else
                                     <li class="mdl-list__item list__item--border-top">
                                         <span class="mdl-list__item-primary-content list__item-text">{{$penawaran->no}}</span>
                                         <span class="mdl-list__item-secondary-content">
-                                            <i class="material-icons newlable" role="presentation">fiber_new</i>
+                                            <i class="material-icons newlable3" role="presentation">fiber_new</i>
                                         </span>
                                     </li>
                                 @endif
@@ -145,14 +145,14 @@
                                     <li class="mdl-list__item">
                                         <span class="mdl-list__item-primary-content list__item-text">{{$admin->name}}</span>
                                         <span class="mdl-list__item-secondary-content">
-                                            <i class="material-icons newlable" role="presentation">fiber_new</i>
+                                            <i class="material-icons newlable4" role="presentation">fiber_new</i>
                                         </span>
                                     </li>
                                 @else
                                     <li class="mdl-list__item list__item--border-top">
                                         <span class="mdl-list__item-primary-content list__item-text">{{$admin->name}}</span>
                                         <span class="mdl-list__item-secondary-content">
-                                            <i class="material-icons newlable" role="presentation">fiber_new</i>
+                                            <i class="material-icons newlable4" role="presentation">fiber_new</i>
                                         </span>
                                     </li>
                                 @endif

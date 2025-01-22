@@ -127,9 +127,24 @@
     margin-left: 220px;
   }
 
-  .newlable {
+  .newlable1 {
     font-size:30px !important;
     color: #00d45a !important;
+  }
+
+  .newlable2 {
+    font-size:30px !important;
+    color: #03A9F4 !important;
+  }
+
+  .newlable3 {
+    font-size:30px !important;
+    color: #ffc107 !important;
+  }
+
+  .newlable4 {
+    font-size:30px !important;
+    color: #00bcd4 !important;
   }
 
   .anostyle{
