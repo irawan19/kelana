@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('content')pagination-custom
+@section('content')
 
     <div class="mdl-grid ui-tables">
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
@@ -81,22 +81,22 @@
                     <div class="mdl-card__supporting-text">
                         <form action="{{ URL('tipe/prosestambah') }}" class="form" method="POST">
                             {{ csrf_field() }}
-                            <div class="form__article">
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <label class="mdl-textfield__label" for="merks_id">Merk</label>
-                                        <select class="form-control select2" id="merks_id" name="merks_id">
-                                            @foreach($merks as $merk)
-                                                <option value="{{ $merk->id }}" {{ Request::old('merks_id') == $merk->id ? $select='selected' : $select='' }}>{{ $merk->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="nama">Nama</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <label class="mdl-textfield__label" for="merks_id">Merk</label>
+                                    <select class="form-control select2" id="merks_id" name="merks_id">
+                                        @foreach($merks as $merk)
+                                            <option value="{{ $merk->id }}" {{ Request::old('merks_id') == $merk->id ? $select='selected' : $select='' }}>{{ $merk->nama }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="nama">Nama</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                             </div>
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
@@ -111,32 +111,32 @@
                         <form action="{{ URL('tipe/prosesedit/'.$edit_tipes->id) }}" class="form" method="POST">
                             {{ csrf_field() }}
                             @method('PATCH')
-                            <div class="form__article">
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <label class="mdl-textfield__label" for="merks_id">Merk</label>
-                                        <select class="form-control select2" id="merks_id" name="merks_id">
-                                            @foreach($merks as $merk)
-                                                @php($selected = '')
-                                                @if(Request::old('merks_id') == '')
-                                                    @if($merk->id == $edit_tipes->merks_id)
-                                                        @php($selected = 'selected')
-                                                    @endif
-                                                @else
-                                                    @if($merk->id == Request::old('merks_id'))
-                                                        @php($selected = 'selected')
-                                                    @endif
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <label class="mdl-textfield__label" for="merks_id">Merk</label>
+                                    <select class="form-control select2" id="merks_id" name="merks_id">
+                                        @foreach($merks as $merk)
+                                            @php($selected = '')
+                                            @if(Request::old('merks_id') == '')
+                                                @if($merk->id == $edit_tipes->merks_id)
+                                                    @php($selected = 'selected')
                                                 @endif
-                                                <option value="{{ $merk->id }}" {{ $selected }}>{{ $merk->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') == '' ? $edit_tipes->nama : Request::old('nama') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="nama">Nama</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
+                                            @else
+                                                @if($merk->id == Request::old('merks_id'))
+                                                    @php($selected = 'selected')
+                                                @endif
+                                            @endif
+                                            <option value="{{ $merk->id }}" {{ $selected }}>{{ $merk->nama }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') == '' ? $edit_tipes->nama : Request::old('nama') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="nama">Nama</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                             </div>
                             <div class="mdl-card__actions right-align">
                                 @if(request()->session()->get('halaman') != '')

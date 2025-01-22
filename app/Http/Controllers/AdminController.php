@@ -94,8 +94,8 @@ class AdminController extends Controller {
         if (!empty($cek)) {
             if (!empty($request->password)) {
                 $aturan = [
-                    'username'          => 'required|unique:users',
-                    'email'             => 'required|unique:users',
+                    'username'          => 'required|unique:users,username,'.$id.',id',
+                    'email'             => 'required|unique:users,email,'.$id.',id',
                     'name'              => 'required',
                     'password'          => 'required|string|min:6|confirmed',
                 ];
@@ -142,8 +142,8 @@ class AdminController extends Controller {
                 }
             } else {
                 $aturan = [
-                    'username'          => 'required|unique:users',
-                    'email'             => 'required|unique:users',
+                    'username'          => 'required|unique:users,username,'.$id.',id',
+                    'email'             => 'required|unique:users,email,'.$id.',id',
                     'name'              => 'required',
                 ];
                 $this->validate($request, $aturan);

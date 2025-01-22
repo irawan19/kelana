@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('content')pagination-custom
+@section('content')
 
     <div class="mdl-grid ui-tables">
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
@@ -78,14 +78,12 @@
                     <div class="mdl-card__supporting-text">
                         <form action="{{ URL('merk/prosestambah') }}" class="form" method="POST">
                             {{ csrf_field() }}
-                            <div class="form__article">
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="nama">Nama</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="nama">Nama</label>
                                 </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                             </div>
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
@@ -100,14 +98,12 @@
                         <form action="{{ URL('merk/prosesedit/'.$edit_merks->id) }}" class="form" method="POST">
                             {{ csrf_field() }}
                             @method('PATCH')
-                            <div class="form__article">
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') == '' ? $edit_merks->nama : Request::old('nama') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="nama">Nama</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="nama" name="nama" value="{{ Request::old('nama') == '' ? $edit_merks->nama : Request::old('nama') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="nama">Nama</label>
                                 </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                             </div>
                             <div class="mdl-card__actions right-align">
                                 @if(request()->session()->get('halaman') != '')

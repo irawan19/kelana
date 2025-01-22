@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('content')pagination-custom
+@section('content')
 
     <div class="mdl-grid ui-tables">
         <div class="mdl-cell mdl-cell--8-col-desktop mdl-cell--8-col-tablet mdl-cell--12-col-phone">
@@ -84,34 +84,40 @@
                     <div class="mdl-card__supporting-text">
                         <form action="{{ URL('admin/prosestambah') }}" class="form" method="POST">
                             {{ csrf_field() }}
-                            <div class="form__article">
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="name" name="name" value="{{ Request::old('name') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="name">Nama</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('name'))}}
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="username" name="username" value="{{ Request::old('username') }}" />
-                                        <label class="mdl-textfield__label" for="username">Username</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('username'))}}
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="email" id="email" name="email" value="{{ Request::old('email') }}" />
-                                        <label class="mdl-textfield__label" for="email">Email</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('email'))}}
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="password" id="password" name="password" value="{{ Request::old('password') }}" />
-                                        <label class="mdl-textfield__label" for="password">Password</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('password'))}}
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="password" id="email" name="password_confirmation" value="{{ Request::old('password_confirmation') }}" />
-                                        <label class="mdl-textfield__label" for="password_confirmation">Konfirmasi Password</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('password_confirmation'))}}
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="name" name="name" value="{{ Request::old('name') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="name">Nama</label>
                                 </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('name'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="username" name="username" value="{{ Request::old('username') }}" />
+                                    <label class="mdl-textfield__label" for="username">Username</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('username'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="email" id="email" name="email" value="{{ Request::old('email') }}" />
+                                    <label class="mdl-textfield__label" for="email">Email</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('email'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="password" id="password" name="password" value="{{ Request::old('password') }}" />
+                                    <label class="mdl-textfield__label" for="password">Password</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('password'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="password" id="password_confirmation" name="password_confirmation" value="{{ Request::old('password_confirmation') }}" />
+                                    <label class="mdl-textfield__label" for="password_confirmation">Konfirmasi Password</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('password_confirmation'))}}
                             </div>
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
@@ -126,35 +132,41 @@
                         <form action="{{ URL('admin/prosesedit/'.$edit_admins->id) }}" class="form" method="POST">
                             {{ csrf_field() }}
                             @method('PATCH')
-                            <div class="form__article">
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="name" name="name" value="{{ Request::old('name') == '' ? $edit_admins->name : Request::old('name') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="name">Nama</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('name'))}}
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="text" id="username" name="username" value="{{ Request::old('username') == '' ? $edit_admins->username : Request::old('username') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="username">Username</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('username'))}}
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="email" id="email" name="email" value="{{ Request::old('email') == '' ? $edit_admins->email : Request::old('email') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="email">Email</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('email'))}}
-                                    <span class="text_info">Kosongi password dan konfirmasi password jika tidak ingin mengubah:</span>
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="password" id="password" name="password" value="{{ Request::old('password') }}" autofocus />
-                                        <label class="mdl-textfield__label" for="password">Password</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('password'))}}
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <input class="mdl-textfield__input" type="password" id="email" name="password_confirmation" value="{{ Request::old('password_confirmation') }}" />
-                                        <label class="mdl-textfield__label" for="password_confirmation">Konfirmasi Password</label>
-                                    </div>
-                                    {{\App\Helpers\General::pesanErrorForm($errors->first('password_confirmation'))}}
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="name" name="name" value="{{ Request::old('name') == '' ? $edit_admins->name : Request::old('name') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="name">Nama</label>
                                 </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('name'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="username" name="username" value="{{ Request::old('username') == '' ? $edit_admins->username : Request::old('username') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="username">Username</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('username'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="email" id="email" name="email" value="{{ Request::old('email') == '' ? $edit_admins->email : Request::old('email') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="email">Email</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('email'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <span class="text_info">Kosongi password dan konfirmasi password jika tidak ingin mengubah:</span>
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="password" id="password" name="password" value="{{ Request::old('password') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="password">Password</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('password'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="password" id="password_confirmation" name="password_confirmation" value="{{ Request::old('password_confirmation') }}" />
+                                    <label class="mdl-textfield__label" for="password_confirmation">Konfirmasi Password</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('password_confirmation'))}}
                             </div>
                             <div class="mdl-card__actions right-align">
                                 @if(request()->session()->get('halaman') != '')
