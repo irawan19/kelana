@@ -166,15 +166,15 @@ class General
 	{
 		$ambil_penawarans = Penawaran::select('no')
 								->whereRaw('YEAR(created_at) = "'.date('Y').'"')
-								->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(no,"/",1),"/",-1) AS SIGNED) desc')
+								->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(no," / ",1)," / ",-1) AS SIGNED) desc')
 								->first();
 		if(!empty($ambil_penawarans))
 		{
 			$no 						= $ambil_penawarans->no;
-			$explode_no 				= explode('/', $no);
+			$explode_no 				= explode(' / ', $no);
 			if(!empty($explode_no[1]))
 			{
-				$no_new 					= (int)$explode_no[1] + 1;
+				$no_new 					= (int)$explode_no[0] + 1;
 				$format_no_new 				= sprintf('%03d', $no_new);
 				$format_penawarans_new 		= $format_no_new.' / PKG / I /'.date('Y').' - SP';
 			}

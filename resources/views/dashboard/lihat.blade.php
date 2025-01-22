@@ -84,7 +84,7 @@
             </div>
 
             <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--6-col-phone">
-                <div class="mdl-card mdl-shadow--2dp">
+                <div class="mdl-card mdl-shadow--2dp trending">
                     <div class="mdl-card__title">
                         <a class="anostyle" href="{{ URL('/penawaran') }}">
                             <h2 class="mdl-card__title-text">
