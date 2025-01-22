@@ -10,7 +10,7 @@ class PenawaranController extends Controller {
     public function index(Request $request) {
         $data['hasil_kata']             = '';
         $url_sekarang                   = $request->fullUrl();
-        $data['penawarans']             = Penawaran::orderBy('nama')
+        $data['penawarans']             = Penawaran::orderBy('no')
                                                 ->paginate(10);
         session()->forget('hasil_kata');
         session()->forget('halaman');
@@ -23,7 +23,7 @@ class PenawaranController extends Controller {
         $data['hasil_kata']             = $hasil_kata;
         $url_sekarang                   = $request->fullUrl();
         $data['penawarans']             = Penawaran::Penawaran::Where('nama', 'LIKE', '%'.$hasil_kata.'%')
-                                                    ->orderBy('nama')
+                                                    ->orderBy('no')
                                                     ->paginate(10);
         session(['hasil_kata'		    => $hasil_kata]);
         session(['halaman'              => $url_sekarang]);
@@ -39,7 +39,9 @@ class PenawaranController extends Controller {
         $cek = Penawaran::onlyTrashed()->where('nama',$request->nama)->first();
         if (empty($cek)) {
             $data = [
+                'no'                => $request->no,
                 'nama'              => $request->nama,
+                'perusahaan'        => $request->perusahaan,
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
             Penawaran::insert($data);

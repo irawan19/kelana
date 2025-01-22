@@ -5,12 +5,23 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Session;
 use App\Models\User;
+use App\Models\Barang;
+use App\Models\Supplier;
+use App\Models\Penawaran;
 
 class DashboardController extends Controller {
     
     public function index()
     {
-        return view('dashboard/lihat');
+        $data['total_barang']   = Barang::count();
+        $data['barangs']        = Barang::orderBy('created_at','desc')->limit(5)->get();
+        $data['total_supplier'] = Supplier::count();
+        $data['suppliers']      = Supplier::orderBy('created_at','desc')->limit(5)->get();
+        $data['total_penawaran']= Penawaran::count();
+        $data['penawarans']     = Penawaran::orderBy('created_at','desc')->limit(5)->get();
+        $data['total_admin']    = User::count();
+        $data['admins']         = User::orderBy('created_at','desc')->limit(5)->get();
+        return view('dashboard/lihat',$data);
     }
 
     public function logout(Request $request)

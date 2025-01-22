@@ -126,3 +126,13 @@
     font-size:16px;
     margin-left: 220px;
   }
+
+  .newlable {
+    font-size:30px !important;
+    color: #00d45a !important;
+  }
+
+  .anostyle{
+    text-decoration: none !important;
+    color: #fff
+  }
