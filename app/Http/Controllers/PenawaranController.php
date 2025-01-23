@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Penawaran;
 use App\Models\Barang;
+use App\Models\Penawaran_barang;
 use App\Helpers\General;
 
 class PenawaranController extends Controller {
@@ -180,4 +181,27 @@ class PenawaranController extends Controller {
             return redirect('penawaran');
         }
     }
+
+    public function cetak($id) {
+        $cek = Penawaran::find($id);
+        if (!empty($cek)) {
+            $data['penawaran']          = $cek;
+            $data['penawaran_barangs']  = Penawaran_barang::selectRaw('barangs.id as id_barangs,
+                                                                        barangs.nama as nama_barangs,
+                                                                        kategoris.nama as nama_kategoris,
+                                                                        merks.nama as nama_merks,
+                                                                        tipes.nama as nama_tipes,
+                                                                        penawaran_barangs.harga')
+                                                            ->join('barangs','barangs.id','penawaran_barangs.barangs_id')
+                                                            ->join('kategoris','kategoris.id','barangs.kategoris_id')
+                                                            ->join('tipes','tipes.id','barangs.tipes_id')
+                                                            ->join('merks','merks.id','tipes.merks_id')
+                                                            ->where('penawarans_id',$cek->id)
+                                                            ->get();
+            return view('penawaran.cetak', $data);
+        } else {
+            return redirect('penawaran');
+        }
+    }
+    
 }
