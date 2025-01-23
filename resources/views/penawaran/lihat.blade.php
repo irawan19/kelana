@@ -109,6 +109,24 @@
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('alamat'))}}
                             </div>
+
+
+                                <div class="mdl-grid">
+                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <label class="mdl-textfield__label" for="merks_id">Merk</label>
+                                        <select class="form-control select2" id="merks_id" name="merks_id">
+                                            @foreach($merks as $merk)
+                                                <option value="{{ $merk->id }}" {{ Request::old('merks_id') == $merk->id ? $select='selected' : $select='' }}>{{ $merk->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mdl-grid">
+                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <input class="mdl-textfield__input" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />
+                                    </div>
+                                </div>
+                                
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
                             </div>
@@ -165,5 +183,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var addButtonHTML, removeButtonHTML;
+        $(document).ready(function () {
+            var inputRowHTML = '<div class="row form-input"><input type="text" /> <input type="button" class="add-more" value="+" /></div>';
+            addButtonHTML = '<input type="button" class="add-more" value="+" />';
+            removeButtonHTML = '<input type="button" class="remove-input" value="-" />';
+
+            $("body").on("click", ".add-more", function () {
+                $(".form-input").last().before(inputRowHTML);
+                showAddRemoveIcon();
+            });
+
+            $("body").on("click", ".remove-input", function () {
+                $(this).parent().remove();
+            });
+        });
+
+        function showAddRemoveIcon() {
+            $('.form-input').find(".add-more").after(removeButtonHTML);
+            $('.form-input').last().find(".remove-input").remove();
+
+            $('.form-input').find(".add-more").remove();
+            $('.form-input').last().append(addButtonHTML);
+        }
+    </script>
 
 @endsection
