@@ -32,7 +32,7 @@
         margin-bottom: 20px;
     }
     header img {
-        width: 120px;
+        width: 150px;
         position: absolute;
         top: 0;
         left: 0;
@@ -47,7 +47,7 @@
     }
     header p {
         margin: 2px 0;
-        font-size: 0.65rem;
+        font-size: 0.8rem;
     }
     .right-align {
         text-align: right;
@@ -112,14 +112,19 @@
     .center-align{
         text-align:center;
     }
+    .textheader{
+        margin-left:70px;
+    }
 </style>
 <div class="page">
     <header>
         <img src="{{ URL('template/images/logo.png') }}" alt="Logo PT. Putra Kelana Gemilang">
-        <h1>PT. PUTRA KELANA GEMILANG</h1>
-        <p>MEDICAL AND HOSPITAL EQUIPMENT SUPPLIER</p>
-        <p>JL. MAGELANG-KOPENG, PLUMBON RT 003 RW 001, BANYUURIP, TEGALREJO, KAB. MAGELANG</p>
-        <p>EMAIL: PTPUTRAKELANAGEMILANG@GMAIL.COM | TELP: (0293) 3199717</p>
+        <div class="textheader">
+            <h1>PT. PUTRA KELANA GEMILANG</h1>
+            <p>Medical and Hospital equipment supplier</p>
+            <p>Jl. Magelang-Kopeng, Plumbon RT 003 RW 001, Banyuurip, Tegalrejo, Kab. Magelang</p>
+            <p>EMAIL: ptputrakelanagemilan@gmail.com * (0293) 3199717</p>
+        </div>
     </header>
 
     <section>
