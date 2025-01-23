@@ -113,10 +113,10 @@
 
                                 <div class="mdl-grid">
                                     <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        <label class="mdl-textfield__label" for="merks_id">Merk</label>
-                                        <select class="form-control select2" id="merks_id" name="merks_id">
-                                            @foreach($merks as $merk)
-                                                <option value="{{ $merk->id }}" {{ Request::old('merks_id') == $merk->id ? $select='selected' : $select='' }}>{{ $merk->nama }}</option>
+                                        <label class="mdl-textfield__label" for="barangs_id">Merk</label>
+                                        <select class="form-control select2" id="barangs_id" name="barangs_id">
+                                            @foreach($barangs as $barang)
+                                                <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.'/'.$barang->nama_merks.'/'.$barang->nama_tipes.'/'.$barang->nama_barangs }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -126,7 +126,7 @@
                                         <input class="mdl-textfield__input" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />
                                     </div>
                                 </div>
-                                
+
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
                             </div>

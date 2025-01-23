@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Penawaran;
+use App\Models\Barang;
 use App\Helpers\General;
 
 class PenawaranController extends Controller {
@@ -10,6 +11,19 @@ class PenawaranController extends Controller {
     public function index(Request $request) {
         $data['hasil_kata']             = '';
         $url_sekarang                   = $request->fullUrl();
+        $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
+                                                            barangs.nama as nama_barangs,
+                                                            barangs.harga_jual,
+                                                            barangs.harga_beli,
+                                                            barangs.stok,
+                                                            kategoris.nama as nama_kategoris,
+                                                            merks.nama as nama_merks,
+                                                            tipes.nama as nama_tipes')
+                                                ->join('kategoris','kategoris.id','barangs.kategoris_id')
+                                                ->join('tipes','tipes.id','barangs.tipes_id')
+                                                ->join('merks','merks.id','tipes.merks_id')
+                                                ->orderBy('barangs.nama')
+                                                ->get();
         $data['penawarans']             = Penawaran::orderBy('no')
                                                 ->paginate(10);
         session()->forget('hasil_kata');
@@ -22,6 +36,19 @@ class PenawaranController extends Controller {
         $hasil_kata                     = $request->cari_kata;
         $data['hasil_kata']             = $hasil_kata;
         $url_sekarang                   = $request->fullUrl();
+        $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
+                                                            barangs.nama as nama_barangs,
+                                                            barangs.harga_jual,
+                                                            barangs.harga_beli,
+                                                            barangs.stok,
+                                                            kategoris.nama as nama_kategoris,
+                                                            merks.nama as nama_merks,
+                                                            tipes.nama as nama_tipes')
+                                                ->join('kategoris','kategoris.id','barangs.kategoris_id')
+                                                ->join('tipes','tipes.id','barangs.tipes_id')
+                                                ->join('merks','merks.id','tipes.merks_id')
+                                                ->orderBy('barangs.nama')
+                                                ->get();
         $data['penawarans']             = Penawaran::Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orderBy('no')
                                                     ->paginate(10);
