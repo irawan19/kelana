@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('cp');
             $table->string('kontak_cp');
+            $table->longtext('kondisi');
+            $table->longtext('catatan');
             $table->timestamps();
             $table->softDeletes();
         });

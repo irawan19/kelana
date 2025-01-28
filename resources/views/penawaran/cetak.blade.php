@@ -88,9 +88,10 @@
     }
     .kondisipenawarantext{
         margin-top:-10px;
+        margin-bottom: 0px;
     }
     .notestext{
-        margin-top:-10px;
+        margin-bottom:0px;
     }
     .notesdetailtext{
         margin-top:-10px;
@@ -170,15 +171,10 @@
             </tbody>
         </table>
 
-        <p>Kondisi Penawaran :</p>
-        <ul class="kondisipenawarantext">
-            <li>Harga Belum PPn</li>
-            <li>Belum Termasuk Ongkir</li>
-        </ul>
-        <p class="notestext">Notes :</p>
-        <ul class="notesdetailtext">
-            <li>Penawaran berlaku selama 30 (tiga puluh) hari kerja</li>
-        </ul>
+        <p class="kondisipenawarantext">Kondisi Penawaran :</p>
+        {!! nl2br($penawaran->kondisi) !!}
+        <p class="notestext">Catatan :</p>
+        {!! nl2br($penawaran->catatan) !!}
 
         <p class="cptext">CP: {{$penawaran->cp}} ({{$penawaran->kontak_cp}})</p>
         <p>Demikian surat penawaran ini kami sampaikan, atas perhatian dan kerjasama Bapak/Ibu, kami ucapkan terima kasih.</p>

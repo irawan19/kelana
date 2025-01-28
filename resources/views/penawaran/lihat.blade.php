@@ -128,6 +128,20 @@
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('kontak_cp'))}}
                             </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <textarea class="mdl-textfield__input" type="text" rows="3" id="kondisi" name="kondisi">{{ Request::old('kondisi') }}</textarea>
+                                    <label class="mdl-textfield__label" for="kondisi">Kondisi</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('kondisi'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <textarea class="mdl-textfield__input" type="text" rows="3" id="catatan" name="catatan">{{ Request::old('catatan') }}</textarea>
+                                    <label class="mdl-textfield__label" for="catatan">Catatan</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('catatan'))}}
+                            </div>
 
                             @if(empty(Request::old('barangs_id')))
                                 <div class="mdl-grid dynamicformbarang">
@@ -232,6 +246,20 @@
                                     <label class="mdl-textfield__label" for="alamat">Alamat</label>
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('alamat'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <textarea class="mdl-textfield__input" type="text" rows="3" id="kondisi" name="kondisi">{{ Request::old('kondisi') == '' ? $edit_penawarans->kondisi : Request::old('kondisi') }}</textarea>
+                                    <label class="mdl-textfield__label" for="kondisi">Kondisi</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('kondisi'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <textarea class="mdl-textfield__input" type="text" rows="3" id="catatan" name="catatan">{{ Request::old('catatan') == '' ? $edit_penawarans->catatan : Request::old('catatan') }}</textarea>
+                                    <label class="mdl-textfield__label" for="catatan">Catatan</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('catatan'))}}
                             </div>
 
                             @if(empty(Request::old('barangs_id')))

@@ -65,6 +65,8 @@ class PenawaranController extends Controller {
             'alamat'            => 'required',
             'cp'                => 'required',
             'kontak_cp'         => 'required',
+            'kondisi'           => 'required',
+            'catatan'           => 'required',
         ];
         $this->validate($request, $aturan);
 
@@ -77,6 +79,8 @@ class PenawaranController extends Controller {
                 'alamat'            => $request->alamat,
                 'cp'                => $request->cp,
                 'kontak_cp'         => $request->kontak_cp,
+                'kondisi'           => $request->kondisi,
+                'catatan'           => $request->catatan,
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
             $id_penawaran = Penawaran::insertGetId($data);
@@ -153,6 +157,8 @@ class PenawaranController extends Controller {
                 'alamat'            => 'required',
                 'cp'                => 'required',
                 'kontak_cp'         => 'required',
+                'kondisi'           => 'required',
+                'catatan'           => 'required',
             ];
             $this->validate($request, $aturan);
             
@@ -165,6 +171,8 @@ class PenawaranController extends Controller {
                     'alamat'            => $request->alamat,
                     'cp'                => $request->cp,
                     'kontak_cp'         => $request->kontak_cp,
+                    'kondisi'           => $request->kondisi,
+                    'catatan'           => $request->catatan,
                 ];
                 
                 Penawaran::find($id)->update($data);
@@ -177,14 +185,16 @@ class PenawaranController extends Controller {
                     'alamat'            => $request->alamat,
                     'cp'                => $request->cp,
                     'kontak_cp'         => $request->kontak_cp,
+                    'kondisi'           => $request->kondisi,
+                    'catatan'           => $request->catatan,
                 ];
                 Penawaran::insert($data);
             }
 
-            Penawaran_barang::where('penawarans_id',$id_penawaran)->delete();
+            Penawaran_barang::where('penawarans_id',$id)->delete();
             foreach($request->barangs_id as $key => $barangs_id) {
                 $penawaran_barang_data = [
-                    'penawarans_id' => $id_penawaran,
+                    'penawarans_id' => $id,
                     'barangs_id'    => $barangs_id,
                     'harga'         => General::ubahHargaKeDB($request->harga[$key]),
                 ];
