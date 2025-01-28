@@ -46,7 +46,7 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $no++ }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $supplier->nama }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $supplier->telepon }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">{{ $supplier->alamat }}</td>
+                                        <td class="mdl-data-table__cell--non-numeric" style="white-space:wrap !important">{{ $supplier->alamat }}</td>
                                         <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('supplier/edit/'.$supplier->id.'?page='.$suppliers->currentPage())}}
                                         </td>

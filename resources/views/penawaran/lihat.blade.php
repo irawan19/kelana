@@ -46,7 +46,7 @@
                                     <tr>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->no }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->perusahaan }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->alamat }}</td>
+                                        <td class="mdl-data-table__cell--non-numeric" style="white-space:wrap !important">{{ $penawaran->alamat }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->cp }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->kontak_cp }}</td>
                                         <td class="mdl-data-table__cell--non-numeric center-align">
