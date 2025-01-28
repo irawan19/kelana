@@ -51,6 +51,8 @@ class PenawaranController extends Controller {
                                                 ->orderBy('barangs.nama')
                                                 ->get();
         $data['penawarans']             = Penawaran::Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
+                                                    ->orWhere('perusahaan', 'LIKE', '%'.$hasil_kata.'%')
+                                                    ->orWhere('alamat', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orderBy('no')
                                                     ->paginate(10);
         session(['hasil_kata'		    => $hasil_kata]);

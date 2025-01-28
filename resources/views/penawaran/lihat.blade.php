@@ -31,7 +31,6 @@
                         <thead>
                         <tr>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">No</th>
-                            <th class="mdl-data-table__cell--non-numeric">Nama</th>
                             <th class="mdl-data-table__cell--non-numeric">Perusahaan</th>
                             <th class="mdl-data-table__cell--non-numeric">Alamat</th>
                             <th class="mdl-data-table__cell--non-numeric">CP</th>
@@ -46,7 +45,6 @@
                                 @foreach($penawarans as $penawaran)
                                     <tr>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->no }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->nama }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->perusahaan }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->alamat }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->cp }}</td>
@@ -64,8 +62,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
-								    <td style="display:none"></td>
+                                    <td colspan="8" class="center-align">Tidak ada data ditampilkan</td>
 								    <td style="display:none"></td>
 								    <td style="display:none"></td>
 								    <td style="display:none"></td>
