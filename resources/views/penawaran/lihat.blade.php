@@ -129,17 +129,18 @@
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('kontak_cp'))}}
                             </div>
 
+                            @if(empty(Request::old('barangs_id')))
                                 <div class="mdl-grid dynamicformbarang">
                                     <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                         <label class="mdl-textfield__label" for="barangs_id">Merk</label>
-                                        <select class="form-control select2" id="barangs_id" name="barangs_id">
+                                        <select class="form-control select2" id="barangs_id" name="barangs_id[]">
                                             @foreach($barangs as $barang)
-                                                <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                                <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id.*') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                        <input class="mdl-textfield__input" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />
+                                        <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.*') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.*') }}" />
                                     </div>
                                     <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                         <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
@@ -150,6 +151,32 @@
                                         </button>
                                     </div>
                                 </div>
+                            @else
+                                @php($get_total_form = count(Request::old('barangs_id')))
+                                @for($total_form = 0; $total_form < $get_total_form; $total_form++)
+                                    <div class="mdl-grid dynamicformbarang">
+                                        <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <label class="mdl-textfield__label" for="barangs_id">Merk</label>
+                                            <select class="form-control select2" id="barangs_id" name="barangs_id[]">
+                                                @foreach($barangs as $barang)
+                                                    <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id.'.$total_form) == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.'.$total_form) == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.'.$total_form) }}" />
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                                                <i class="material-icons">create</i>
+                                                <span class="mdl-button__ripple-container">
+                                                    <span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endfor
+                            @endif
                             
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
@@ -206,6 +233,56 @@
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('alamat'))}}
                             </div>
+
+                            @if(empty(Request::old('barangs_id')))
+                                <div class="mdl-grid dynamicformbarang">
+                                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                        <label class="mdl-textfield__label" for="barangs_id">Merk</label>
+                                        <select class="form-control select2" id="barangs_id" name="barangs_id[]">
+                                            @foreach($barangs as $barang)
+                                                <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id.*') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                        <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.*') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.*') }}" />
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                        <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                                            <i class="material-icons">create</i>
+                                            <span class="mdl-button__ripple-container">
+                                                <span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            @else
+                                @php($get_total_form = count(Request::old('barangs_id')))
+                                @for($total_form = 0; $total_form < $get_total_form; $total_form++)
+                                    <div class="mdl-grid dynamicformbarang">
+                                        <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <label class="mdl-textfield__label" for="barangs_id">Merk</label>
+                                            <select class="form-control select2" id="barangs_id" name="barangs_id[]">
+                                                @foreach($barangs as $barang)
+                                                    <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id.'.$total_form) == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.'.$total_form) == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.'.$total_form) }}" />
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                                                <i class="material-icons">create</i>
+                                                <span class="mdl-button__ripple-container">
+                                                    <span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endfor
+                            @endif
+
                             <div class="mdl-card__actions right-align">
                                 @if(request()->session()->get('halaman') != '')
                                     @php($link_batal = request()->session()->get('halaman'))
@@ -225,17 +302,17 @@
     <script>
         var addButtonHTML, removeButtonHTML;
         $(document).ready(function () {
-            var inputRowHTML = '<div class="mdl-grid dynamicformbarang">'+
+            var inputRowHTML    = '<div class="mdl-grid dynamicformbarang">'+
                                     '<div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
                                         '<label class="mdl-textfield__label" for="barangs_id">Merk</label>'+
-                                        '<select class="form-control select2" id="barangs_id" name="barangs_id">'+
+                                        '<select class="form-control select2" id="barangs_id" name="barangs_id[]">'+
                                             @foreach($barangs as $barang)
-                                                '<option value="{{ $barang->id_barangs }}" {{ Request::old("barangs_id") == $barang->id_barangs ? $select="selected" : $select="" }}>{{ $barang->nama_kategoris." / ".$barang->nama_merks." / ".$barang->nama_tipes." / ".$barang->nama_barangs }}</option>'+
+                                                '<option value="{{ $barang->id_barangs }}" {{ Request::old("barangs_id.*") == $barang->id_barangs ? $select="selected" : $select="" }}>{{ $barang->nama_kategoris." / ".$barang->nama_merks." / ".$barang->nama_tipes." / ".$barang->nama_barangs }}</option>'+
                                             @endforeach
                                         '</select>'+
                                     '</div>'+
                                     '<div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
-                                        '<input class="mdl-textfield__input" type="text" id="harga" name="harga" value="{{ Request::old("harga") == "" ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />'+
+                                        '<input class="priceformat mdl-textfield__input" type="text" id="harga[]" name="harga[]" value="{{ Request::old("harga.*") == "" ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old("harga.*") }}" />'+
                                     '</div>'+
                                     '<div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
                                         '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
@@ -246,13 +323,13 @@
                                         '</button>'+
                                     '</div>'+
                                 '</div>';
-            addButtonHTML   = '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
+            addButtonHTML       = '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
                                     '<i class="material-icons">create</i>'+
                                     '<span class="mdl-button__ripple-container">'+
                                         '<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>'+
                                     '</span>'+
                                 '</button>';
-            removeButtonHTML = '<button type="button" class="remove-input mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-red" data-upgraded=",MaterialButton,MaterialRipple">'+
+            removeButtonHTML    = '<button type="button" class="remove-input mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-red" data-upgraded=",MaterialButton,MaterialRipple">'+
                                     '<i class="material-icons">delete</i>'+
                                     '<span class="mdl-button__ripple-container">'+
                                         '<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>'+
@@ -265,7 +342,7 @@
             });
 
             $("body").on("click", ".remove-input", function () {
-                $(this).parent().remove();
+                $(this).parent().parent().remove();
             });
         });
 
@@ -274,7 +351,12 @@
             $('.dynamicformbarang').last().find(".remove-input").remove();
 
             $('.dynamicformbarang').find(".add-more").remove();
-            $('.dynamicformbarang').last().append(addButtonHTML);
+            $('.dynamicformbarang').last().find(".mdl-cell--1-col").append(addButtonHTML);
+
+$('.priceformat').priceFormat({
+            clearPrefix: true,
+            allowNegative: true,
+        });
         }
     </script>
 

@@ -79,7 +79,16 @@ class PenawaranController extends Controller {
                 'kontak_cp'         => $request->kontak_cp,
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
-            Penawaran::insert($data);
+            $id_penawaran = Penawaran::insertGetId($data);
+
+            foreach($request->barangs_id as $key => $barangs_id) {
+                $penawaran_barang_data = [
+                    'penawarans_id' => $id_penawaran,
+                    'barangs_id'    => $barangs_id,
+                    'harga'         => General::ubahHargaKeDB($request->harga[$key]),
+                ];
+                Penawaran_barang::insert($penawaran_barang_data);
+            }
 
             $setelah_simpan = [
                 'alert'                     => 'sukses',
@@ -189,6 +198,15 @@ class PenawaranController extends Controller {
                 return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             }
 
+            Penawaran_barang::where('penawaran_id',$id_penawaran)->delete();
+            foreach($request->barangs_id as $key => $barangs_id) {
+                $penawaran_barang_data = [
+                    'penawarans_id' => $id_penawaran,
+                    'barangs_id'    => $barangs_id,
+                    'harga'         => General::ubahHargaKeDB($request->harga[$key]),
+                ];
+                Penawaran_barang::insert($penawaran_barang_data);
+            }
         } else {
             return redirect('penawaran');
         }
