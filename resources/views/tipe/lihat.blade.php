@@ -45,10 +45,10 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $no++ }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $tipe->nama_merks }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $tipe->nama_tipes }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('tipe/edit/'.$tipe->id_tipes.'?page='.$tipes->currentPage())}}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::hapus('tipe/hapus/'.$tipe->id_tipes, $tipe->nama_tipes)}}
                                         </td>
                                     </tr>

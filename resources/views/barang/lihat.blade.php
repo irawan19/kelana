@@ -55,10 +55,10 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_beli) }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->stok }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('barang/edit/'.$barang->id_barangs.'?page='.$barangs->currentPage())}}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::hapus('barang/hapus/'.$barang->id_barangs, $barang->nama_barangs)}}
                                         </td>
                                     </tr>

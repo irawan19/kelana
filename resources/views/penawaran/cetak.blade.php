@@ -180,7 +180,7 @@
             <li>Penawaran berlaku selama 30 (tiga puluh) hari kerja</li>
         </ul>
 
-        <p class="cptext">CP: Aji Wahyu Wibowo (0812 2657 3421)</p>
+        <p class="cptext">CP: {{$penawaran->cp}} ({{$penawaran->kontak_cp}})</p>
         <p>Demikian surat penawaran ini kami sampaikan, atas perhatian dan kerjasama Bapak/Ibu, kami ucapkan terima kasih.</p>
     </section>
 

@@ -63,6 +63,8 @@ class PenawaranController extends Controller {
             'nama'              => 'required',
             'perusahaan'        => 'required',
             'alamat'            => 'required',
+            'cp'                => 'required',
+            'kontak_cp'         => 'required',
         ];
         $this->validate($request, $aturan);
 
@@ -73,6 +75,8 @@ class PenawaranController extends Controller {
                 'nama'              => $request->nama,
                 'perusahaan'        => $request->perusahaan,
                 'alamat'            => $request->alamat,
+                'cp'                => $request->cp,
+                'kontak_cp'         => $request->kontak_cp,
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
             Penawaran::insert($data);
@@ -124,6 +128,8 @@ class PenawaranController extends Controller {
                 'nama'              => 'required',
                 'perusahaan'        => 'required',
                 'alamat'            => 'required',
+                'cp'                => 'required',
+                'kontak_cp'         => 'required',
             ];
             $this->validate($request, $aturan);
             
@@ -134,6 +140,8 @@ class PenawaranController extends Controller {
                     'nama'              => $request->nama,
                     'perusahaan'        => $request->perusahaan,
                     'alamat'            => $request->alamat,
+                    'cp'                => $request->cp,
+                    'kontak_cp'         => $request->kontak_cp,
                 ];
                 
                 Penawaran::find($id)->update($data);
@@ -156,6 +164,8 @@ class PenawaranController extends Controller {
                     'nama'              => $request->nama,
                     'perusahaan'        => $request->perusahaan,
                     'alamat'            => $request->alamat,
+                    'cp'                => $request->cp,
+                    'kontak_cp'         => $request->kontak_cp,
                 ];
                 Penawaran::insert($data);
     

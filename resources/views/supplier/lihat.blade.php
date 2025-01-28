@@ -47,10 +47,10 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $supplier->nama }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $supplier->telepon }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $supplier->alamat }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('supplier/edit/'.$supplier->id.'?page='.$suppliers->currentPage())}}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::hapus('supplier/hapus/'.$supplier->id, $supplier->nama)}}
                                         </td>
                                     </tr>

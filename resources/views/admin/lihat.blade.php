@@ -47,10 +47,10 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $admin->name }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $admin->username }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $admin->email }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('admin/edit/'.$admin->id.'?page='.$admins->currentPage())}}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::hapus('admin/hapus/'.$admin->id, $admin->name)}}
                                         </td>
                                     </tr>

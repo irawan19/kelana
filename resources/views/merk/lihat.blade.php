@@ -43,10 +43,10 @@
                                     <tr>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $no++ }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $merk->nama }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('merk/edit/'.$merk->id.'?page='.$merks->currentPage())}}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::hapus('merk/hapus/'.$merk->id, $merk->nama)}}
                                         </td>
                                     </tr>

@@ -34,6 +34,8 @@
                             <th class="mdl-data-table__cell--non-numeric">Nama</th>
                             <th class="mdl-data-table__cell--non-numeric">Perusahaan</th>
                             <th class="mdl-data-table__cell--non-numeric">Alamat</th>
+                            <th class="mdl-data-table__cell--non-numeric">CP</th>
+                            <th class="mdl-data-table__cell--non-numeric">Kontak CP</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Edit</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Hapus</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Cetak</th>
@@ -47,20 +49,23 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->nama }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->perusahaan }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->alamat }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->cp }}</td>
+                                        <td class="mdl-data-table__cell--non-numeric">{{ $penawaran->kontak_cp }}</td>
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('penawaran/edit/'.$penawaran->id.'?page='.$penawarans->currentPage())}}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::hapus('penawaran/hapus/'.$penawaran->id, $penawaran->nama)}}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
+                                        <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::cetak('penawaran/cetak/'.$penawaran->id)}}
                                         </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="7" class="center-align">Tidak ada data ditampilkan</td>
+                                    <td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+								    <td style="display:none"></td>
 								    <td style="display:none"></td>
 								    <td style="display:none"></td>
 								    <td style="display:none"></td>
@@ -109,24 +114,37 @@
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('alamat'))}}
                             </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="cp" name="cp" value="{{ Request::old('cp') }}" />
+                                    <label class="mdl-textfield__label" for="cp">CP</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('cp'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="kontak_cp" name="kontak_cp" value="{{ Request::old('kontak_cp') }}" />
+                                    <label class="mdl-textfield__label" for="kontak_cp">Kontak CP</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('kontak_cp'))}}
+                            </div>
 
-
+                            <div class="dynamicformbarang">
                                 <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                         <label class="mdl-textfield__label" for="barangs_id">Merk</label>
                                         <select class="form-control select2" id="barangs_id" name="barangs_id">
                                             @foreach($barangs as $barang)
-                                                <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.'/'.$barang->nama_merks.'/'.$barang->nama_tipes.'/'.$barang->nama_barangs }}</option>
+                                                <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                <div class="mdl-grid">
-                                    <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                         <input class="mdl-textfield__input" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />
                                     </div>
                                 </div>
-
+                            </div>
+                            
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
                             </div>
@@ -160,6 +178,20 @@
                                     <label class="mdl-textfield__label" for="perusahaan">Perusahaan</label>
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('perusahaan'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="cp" name="cp" value="{{ Request::old('cp') == '' ? $edit_penawarans->cp : Request::old('cp') }}" />
+                                    <label class="mdl-textfield__label" for="cp">CP</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('cp'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="kontak_cp" name="kontak_cp" value="{{ Request::old('kontak_cp') == '' ? $edit_penawarans->kontak_cp : Request::old('kontak_cp') }}" />
+                                    <label class="mdl-textfield__label" for="kontak_cp">Kontak CP</label>
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('kontak_cp'))}}
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

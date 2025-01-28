@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('perusahaan');
             $table->string('alamat');
+            $table->string('cp');
+            $table->string('kontak_cp');
             $table->timestamps();
             $table->softDeletes();
         });

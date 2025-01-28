@@ -74,10 +74,14 @@ class General
                  	</button>';
 		}
 
-		public static function edit($link) {
-			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-purple pull-right" data-upgraded=",MaterialButton,MaterialRipple">
-                    	<i class="material-icons">border_color</i>
-                	</a>';
+		public static function edit($link)
+		{
+			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-purple" data-upgraded=",MaterialButton,MaterialRipple">
+                    <i class="material-icons">create</i>
+                    <span class="mdl-button__ripple-container">
+						<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+					</span>
+				</a>';
 		}
 
 		public static function perbarui()
@@ -99,15 +103,22 @@ class General
 
 		public static function hapus($link = '', $label = '')
 		{
-			echo '<button type="button" class="showModalHapus mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-red pull-right" data-upgraded=",MaterialButton,MaterialRipple" data-link="' . URL($link) . '" data-nama="' . $label . '">
-                    	<i class="material-icons">delete</i>
-                    </button>';
+			echo '<button type="button" class="showModalHapus mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-red" data-upgraded=",MaterialButton,MaterialRipple">
+                    <i class="material-icons">delete</i>
+                    <span class="mdl-button__ripple-container">
+						<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+					</span>
+				</button>';
 		}
 
-		public static function cetak($link) {
-			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-green pull-right" data-upgraded=",MaterialButton,MaterialRipple">
-                    	<i class="material-icons">print</i>
-                	</a>';
+		public static function cetak($link)
+		{
+			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                    <i class="material-icons">print</i>
+                    <span class="mdl-button__ripple-container">
+						<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+					</span>
+				</a>';
 		}
 	//Tombol
 

@@ -19,5 +19,7 @@ class Penawaran extends Model
         'nama',
         'perusahaan',
         'alamat',
+        'cp',
+        'kontak_cp'
     ];
 }
