@@ -114,6 +114,19 @@ class PenawaranController extends Controller {
             $data['penawarans']     = Penawaran::Where('nama', 'LIKE', '%'.$hasil_kata.'%')
                                                 ->orderBy('nama')
                                                 ->paginate(10);
+            $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
+                                                                barangs.nama as nama_barangs,
+                                                                barangs.harga_jual,
+                                                                barangs.harga_beli,
+                                                                barangs.stok,
+                                                                kategoris.nama as nama_kategoris,
+                                                                merks.nama as nama_merks,
+                                                                tipes.nama as nama_tipes')
+                                                    ->join('kategoris','kategoris.id','barangs.kategoris_id')
+                                                    ->join('tipes','tipes.id','barangs.tipes_id')
+                                                    ->join('merks','merks.id','tipes.merks_id')
+                                                    ->orderBy('barangs.nama')
+                                                    ->get();
             $data['edit_penawarans']= Penawaran::find($id);
             return view('penawaran.lihat', $data);
         } else {

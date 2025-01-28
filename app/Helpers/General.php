@@ -59,13 +59,6 @@ class General
 	//Notifikasi
 
 	//Tombol
-		public static function pencarian()
-		{
-			echo '<button class="btn btn-sm btn-primary" type="submit">
-					<span class="cil-search"></span> Cari
-				</button>';
-		}
-
 		public static function simpan($link = '')
 		{
 			echo  '<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-green pull-right" data-upgraded=",MaterialButton,MaterialRipple">
@@ -103,7 +96,7 @@ class General
 
 		public static function hapus($link = '', $label = '')
 		{
-			echo '<button type="button" class="showModalHapus mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-red" data-upgraded=",MaterialButton,MaterialRipple">
+			echo '<button type="button" class="showModalHapus mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-red" data-upgraded=",MaterialButton,MaterialRipple" data-link="' . URL($link) . '" data-nama="' . $label . '">
                     <i class="material-icons">delete</i>
                     <span class="mdl-button__ripple-container">
 						<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>

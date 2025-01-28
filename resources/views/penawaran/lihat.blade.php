@@ -129,8 +129,7 @@
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('kontak_cp'))}}
                             </div>
 
-                            <div class="dynamicformbarang">
-                                <div class="mdl-grid">
+                                <div class="mdl-grid dynamicformbarang">
                                     <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                         <label class="mdl-textfield__label" for="barangs_id">Merk</label>
                                         <select class="form-control select2" id="barangs_id" name="barangs_id">
@@ -139,11 +138,18 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                    <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                         <input class="mdl-textfield__input" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />
                                     </div>
+                                    <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                        <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                                            <i class="material-icons">create</i>
+                                            <span class="mdl-button__ripple-container">
+                                                <span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+                                            </span>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
                             
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
@@ -219,12 +225,42 @@
     <script>
         var addButtonHTML, removeButtonHTML;
         $(document).ready(function () {
-            var inputRowHTML = '<div class="row form-input"><input type="text" /> <input type="button" class="add-more" value="+" /></div>';
-            addButtonHTML = '<input type="button" class="add-more" value="+" />';
-            removeButtonHTML = '<input type="button" class="remove-input" value="-" />';
+            var inputRowHTML = '<div class="mdl-grid dynamicformbarang">'+
+                                    '<div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
+                                        '<label class="mdl-textfield__label" for="barangs_id">Merk</label>'+
+                                        '<select class="form-control select2" id="barangs_id" name="barangs_id">'+
+                                            @foreach($barangs as $barang)
+                                                '<option value="{{ $barang->id_barangs }}" {{ Request::old("barangs_id") == $barang->id_barangs ? $select="selected" : $select="" }}>{{ $barang->nama_kategoris." / ".$barang->nama_merks." / ".$barang->nama_tipes." / ".$barang->nama_barangs }}</option>'+
+                                            @endforeach
+                                        '</select>'+
+                                    '</div>'+
+                                    '<div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
+                                        '<input class="mdl-textfield__input" type="text" id="harga" name="harga" value="{{ Request::old("harga") == "" ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />'+
+                                    '</div>'+
+                                    '<div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
+                                        '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
+                                            '<i class="material-icons">create</i>'+
+                                            '<span class="mdl-button__ripple-container">'+
+                                                '<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>'+
+                                            '</span>'+
+                                        '</button>'+
+                                    '</div>'+
+                                '</div>';
+            addButtonHTML   = '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
+                                    '<i class="material-icons">create</i>'+
+                                    '<span class="mdl-button__ripple-container">'+
+                                        '<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>'+
+                                    '</span>'+
+                                '</button>';
+            removeButtonHTML = '<button type="button" class="remove-input mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-red" data-upgraded=",MaterialButton,MaterialRipple">'+
+                                    '<i class="material-icons">delete</i>'+
+                                    '<span class="mdl-button__ripple-container">'+
+                                        '<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>'+
+                                    '</span>'+
+                                '</button>';
 
             $("body").on("click", ".add-more", function () {
-                $(".form-input").last().before(inputRowHTML);
+                $(".dynamicformbarang").last().before(inputRowHTML);
                 showAddRemoveIcon();
             });
 
@@ -234,11 +270,11 @@
         });
 
         function showAddRemoveIcon() {
-            $('.form-input').find(".add-more").after(removeButtonHTML);
-            $('.form-input').last().find(".remove-input").remove();
+            $('.dynamicformbarang').find(".add-more").after(removeButtonHTML);
+            $('.dynamicformbarang').last().find(".remove-input").remove();
 
-            $('.form-input').find(".add-more").remove();
-            $('.form-input').last().append(addButtonHTML);
+            $('.dynamicformbarang').find(".add-more").remove();
+            $('.dynamicformbarang').last().append(addButtonHTML);
         }
     </script>
 
