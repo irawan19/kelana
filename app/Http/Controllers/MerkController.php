@@ -100,18 +100,6 @@ class MerkController extends Controller {
                 ];
                 
                 Merk::find($id)->update($data);
-                
-                $setelah_simpan = [
-                    'alert'                     => 'sukses',
-                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-                ];
-
-                if(request()->session()->get('halaman') != '') {
-                    $url = request()->session()->get('halaman');
-                    return redirect($url)->with('setelah_simpan', $setelah_simpan);
-                }
-                else
-                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             } else {
                 Merk::find($id)->delete();
 
@@ -119,14 +107,19 @@ class MerkController extends Controller {
                     'nama'              => $request->nama,
                 ];
                 Merk::insert($data);
-    
-                $setelah_simpan = [
-                    'alert'                     => 'sukses',
-                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-                ];
-                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             }
+                
+            $setelah_simpan = [
+                'alert'                     => 'sukses',
+                'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
+            ];
 
+            if(request()->session()->get('halaman') != '') {
+                $url = request()->session()->get('halaman');
+                return redirect($url)->with('setelah_simpan', $setelah_simpan);
+            }
+            else
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
         } else {
             return redirect('merk');
         }

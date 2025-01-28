@@ -235,27 +235,39 @@
                             </div>
 
                             @if(empty(Request::old('barangs_id')))
-                                <div class="mdl-grid dynamicformbarang">
-                                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                        <label class="mdl-textfield__label" for="barangs_id">Merk</label>
-                                        <select class="form-control select2" id="barangs_id" name="barangs_id[]">
-                                            @foreach($barangs as $barang)
-                                                <option value="{{ $barang->id_barangs }}" {{ Request::old('barangs_id.*') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
-                                            @endforeach
-                                        </select>
+                                @foreach($edit_penawaran_barangs as $penawaran_barang)
+                                    <div class="mdl-grid dynamicformbarang">
+                                        <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <label class="mdl-textfield__label" for="barangs_id">Merk</label>
+                                            <select class="form-control select2" id="barangs_id" name="barangs_id[]">
+                                                @foreach($barangs as $barang)
+                                                    @php($selected = '')
+                                                    @if(Request::old('barangs_id') == '')
+                                                        @if($barang->id_barangs == $penawaran_barang->barangs_id)
+                                                            @php($selected = 'selected')
+                                                        @endif
+                                                    @else
+                                                        @if($barang->id == Request::old('barangs_id'))
+                                                            @php($selected = 'selected')
+                                                        @endif
+                                                    @endif
+                                                    <option value="{{ $barang->id_barangs }}" {{ $selected }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.*') == '' ? \App\Helpers\General::ubahDBKeHarga($penawaran_barang->harga) : Request::old('harga.*') }}" />
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                                                <i class="material-icons">create</i>
+                                                <span class="mdl-button__ripple-container">
+                                                    <span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                        <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.*') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.*') }}" />
-                                    </div>
-                                    <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                        <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
-                                            <i class="material-icons">create</i>
-                                            <span class="mdl-button__ripple-container">
-                                                <span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
+                                @endforeach
                             @else
                                 @php($get_total_form = count(Request::old('barangs_id')))
                                 @for($total_form = 0; $total_form < $get_total_form; $total_form++)

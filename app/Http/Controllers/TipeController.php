@@ -124,18 +124,6 @@ class TipeController extends Controller {
                 ];
                 
                 Tipe::find($id)->update($data);
-                    
-                $setelah_simpan = [
-                    'alert'                     => 'sukses',
-                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-                ];
-
-                if(request()->session()->get('halaman') != '') {
-                    $url = request()->session()->get('halaman');
-                    return redirect($url)->with('setelah_simpan', $setelah_simpan);
-                }
-                else
-                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             } else {
                 Tipe::find($id)->delete();
 
@@ -143,13 +131,19 @@ class TipeController extends Controller {
                     'nama'              => $request->nama,
                 ];
                 Tipe::insert($data);
-    
-                $setelah_simpan = [
-                    'alert'                     => 'sukses',
-                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-                ];
-                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             }
+
+            $setelah_simpan = [
+                'alert'                     => 'sukses',
+                'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
+            ];
+            
+            if(request()->session()->get('halaman') != '') {
+                $url = request()->session()->get('halaman');
+                return redirect($url)->with('setelah_simpan', $setelah_simpan);
+            }
+            else
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
 
         } else {
             return redirect('tipe');

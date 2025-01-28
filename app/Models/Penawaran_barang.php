@@ -13,6 +13,7 @@ class Penawaran_barang extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'penawarans_id',
         'barangs_id',
         'harga',
     ];

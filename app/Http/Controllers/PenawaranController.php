@@ -137,6 +137,7 @@ class PenawaranController extends Controller {
                                                     ->orderBy('barangs.nama')
                                                     ->get();
             $data['edit_penawarans']= Penawaran::find($id);
+            $data['edit_penawaran_barangs'] = Penawaran_barang::where('penawarans_id',$id)->get();
             return view('penawaran.lihat', $data);
         } else {
             return redirect('penawaran');
@@ -167,18 +168,6 @@ class PenawaranController extends Controller {
                 ];
                 
                 Penawaran::find($id)->update($data);
-                
-                $setelah_simpan = [
-                    'alert'                     => 'sukses',
-                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-                ];
-
-                if(request()->session()->get('halaman') != '') {
-                    $url = request()->session()->get('halaman');
-                    return redirect($url)->with('setelah_simpan', $setelah_simpan);
-                }
-                else
-                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             } else {
                 Penawaran::find($id)->delete();
 
@@ -190,15 +179,9 @@ class PenawaranController extends Controller {
                     'kontak_cp'         => $request->kontak_cp,
                 ];
                 Penawaran::insert($data);
-    
-                $setelah_simpan = [
-                    'alert'                     => 'sukses',
-                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-                ];
-                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             }
 
-            Penawaran_barang::where('penawaran_id',$id_penawaran)->delete();
+            Penawaran_barang::where('penawarans_id',$id_penawaran)->delete();
             foreach($request->barangs_id as $key => $barangs_id) {
                 $penawaran_barang_data = [
                     'penawarans_id' => $id_penawaran,
@@ -207,6 +190,18 @@ class PenawaranController extends Controller {
                 ];
                 Penawaran_barang::insert($penawaran_barang_data);
             }
+            
+            $setelah_simpan = [
+                'alert'                     => 'sukses',
+                'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
+            ];
+
+            if(request()->session()->get('halaman') != '') {
+                $url = request()->session()->get('halaman');
+                return redirect($url)->with('setelah_simpan', $setelah_simpan);
+            }
+            else
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
         } else {
             return redirect('penawaran');
         }

@@ -98,18 +98,6 @@ class KategoriController extends Controller {
                 ];
                 
                 Kategori::find($id)->update($data);
-                
-                $setelah_simpan = [
-                    'alert'                     => 'sukses',
-                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-                ];
-
-                if(request()->session()->get('halaman') != '') {
-                    $url = request()->session()->get('halaman');
-                    return redirect($url)->with('setelah_simpan', $setelah_simpan);
-                }
-                else
-                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             } else {
                 Kategori::find($id)->delete();
 
@@ -117,14 +105,19 @@ class KategoriController extends Controller {
                     'nama'              => $request->nama,
                 ];
                 Kategori::insert($data);
-    
-                $setelah_simpan = [
-                    'alert'                     => 'sukses',
-                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-                ];
-                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             }
 
+            $setelah_simpan = [
+                'alert'                     => 'sukses',
+                'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
+            ];
+
+            if(request()->session()->get('halaman') != '') {
+                $url = request()->session()->get('halaman');
+                return redirect($url)->with('setelah_simpan', $setelah_simpan);
+            }
+            else
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
         } else {
             return redirect('kategori');
         }

@@ -111,18 +111,6 @@ class AdminController extends Controller {
                     ];
                     
                     User::find($id)->update($data);
-                    
-                    $setelah_simpan = [
-                        'alert'                     => 'sukses',
-                        'text'                      => 'Data '.$request->name.' berhasil diperbarui',
-                    ];
-    
-                    if(request()->session()->get('halaman') != '') {
-                        $url = request()->session()->get('halaman');
-                        return redirect($url)->with('setelah_simpan', $setelah_simpan);
-                    }
-                    else
-                        return redirect()->back()->with('setelah_simpan', $setelah_simpan);
                 } else {
                     User::find($id)->delete();
     
@@ -133,12 +121,6 @@ class AdminController extends Controller {
                         'password'          => bcrypt($request->password),
                     ];
                     User::insert($data);
-        
-                    $setelah_simpan = [
-                        'alert'                     => 'sukses',
-                        'text'                      => 'Data '.$request->name.' berhasil diperbarui',
-                    ];
-                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
                 }
             } else {
                 $aturan = [
@@ -156,18 +138,6 @@ class AdminController extends Controller {
                         'email'             => $request->email,
                     ];
                     User::find($id)->update($data);
-                    
-                    $setelah_simpan = [
-                        'alert'                     => 'sukses',
-                        'text'                      => 'Data '.$request->name.' berhasil diperbarui',
-                    ];
-    
-                    if(request()->session()->get('halaman') != '') {
-                        $url = request()->session()->get('halaman');
-                        return redirect($url)->with('setelah_simpan', $setelah_simpan);
-                    }
-                    else
-                        return redirect()->back()->with('setelah_simpan', $setelah_simpan);
                 } else {
                     User::find($id)->delete();
     
@@ -177,14 +147,20 @@ class AdminController extends Controller {
                         'email'             => $request->email,
                     ];
                     User::insert($data);
-        
-                    $setelah_simpan = [
-                        'alert'                     => 'sukses',
-                        'text'                      => 'Data '.$request->name.' berhasil diperbarui',
-                    ];
-                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
                 }
             }
+                    
+            $setelah_simpan = [
+                'alert'                     => 'sukses',
+                'text'                      => 'Data '.$request->name.' berhasil diperbarui',
+            ];
+
+            if(request()->session()->get('halaman') != '') {
+                $url = request()->session()->get('halaman');
+                return redirect($url)->with('setelah_simpan', $setelah_simpan);
+            }
+            else
+                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
         } else {
             return redirect('admin');
         }
