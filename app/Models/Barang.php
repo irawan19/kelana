@@ -18,7 +18,7 @@ class Barang extends Model
         'kategoris_id',
         'tipes_id',
         'nama',
-        'harga',
+        'harga_jual',
         'stok',
     ];
 }

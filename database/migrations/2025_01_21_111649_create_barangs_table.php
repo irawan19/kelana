@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('tipes_id')->unsigned()->index()->nullable();
             $table->foreign('tipes_id')->references('id')->on('tipes')->onUpdate('set null')->onDelete('set null');
             $table->longtext('nama');
-            $table->double('harga');
+            $table->double('harga_jual');
             $table->double('stok');
             $table->timestamps();
             $table->softDeletes();

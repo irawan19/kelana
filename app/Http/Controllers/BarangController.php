@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\Tipe;
 use App\Models\Barang;
+use App\Models\Supplier;
 use App\Helpers\General;
 
 class BarangController extends Controller {
@@ -14,7 +15,7 @@ class BarangController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
-                                                            barangs.harga,
+                                                            barangs.harga_jual,
                                                             barangs.stok,
                                                             kategoris.nama as nama_kategoris,
                                                             merks.nama as nama_merks,
@@ -25,6 +26,7 @@ class BarangController extends Controller {
                                                 ->orderBy('barangs.nama')
                                                 ->paginate(10);
         $data['kategoris']              = Kategori::orderBy('nama')->get();
+        $data['suppliers']              = Supplier::orderBy('nama')->get();
         $data['tipes']                  = Tipe::selectRaw('tipes.id as id_tipes,
                                                             tipes.nama as nama_tipes,
                                                             merks.id as id_merks,
@@ -44,7 +46,7 @@ class BarangController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
-                                                            barangs.harga,
+                                                            barangs.harga_jual,
                                                             barangs.stok,
                                                             kategoris.nama as nama_kategoris,
                                                             merks.nama as nama_merks,
@@ -55,6 +57,7 @@ class BarangController extends Controller {
                                                 ->orderBy('barangs.nama')
                                                 ->paginate(10);
         $data['kategoris']              = Kategori::orderBy('nama')->get();
+        $data['suppliers']              = Supplier::orderBy('nama')->get();
         $data['tipes']                  = Tipe::selectRaw('tipes.id as id_tipes,
                                                 tipes.nama as nama_tipes,
                                                 merks.id as id_merks,
@@ -72,7 +75,7 @@ class BarangController extends Controller {
             'kategoris_id'      => 'required',
             'tipes_id'          => 'required',
             'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
-            'harga'             => 'required',
+            'harga_jual'        => 'required',
             'stok'              => 'required',
         ];
         $this->validate($request, $aturan);
@@ -83,7 +86,7 @@ class BarangController extends Controller {
                 'kategoris_id'      => $request->kategoris_id,
                 'tipes_id'          => $request->tipes_id,
                 'nama'              => $request->nama,
-                'harga'             => General::ubahHargaKeDB($request->harga),
+                'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
                 'stok'              => $request->stok,
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
@@ -121,7 +124,7 @@ class BarangController extends Controller {
             $data['hasil_kata']     = $hasil_kata;
             $data['barangs']        = Barang::selectRaw('barangs.id as id_barangs,
                                                         barangs.nama as nama_barangs,
-                                                        barangs.harga,
+                                                        barangs.harga_jual,
                                                         barangs.stok,
                                                         kategoris.nama as nama_kategoris,
                                                         merks.nama as nama_merks,
@@ -153,7 +156,7 @@ class BarangController extends Controller {
                 'kategoris_id'      => 'required',
                 'tipes_id'          => 'required',
                 'nama'              => 'required|unique:merks,nama,'.$id.',id',
-                'harga'             => 'required',
+                'harga_jual'        => 'required',
                 'stok'              => 'required',
             ];
             $this->validate($request, $aturan);
@@ -164,7 +167,7 @@ class BarangController extends Controller {
                     'kategoris_id'      => $request->kategoris_id,
                     'tipes_id'          => $request->tipes_id,
                     'nama'              => $request->nama,
-                    'harga'             => General::ubahHargaKeDB($request->harga),
+                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
                     'stok'              => $request->stok,
                 ];
                 
@@ -176,7 +179,7 @@ class BarangController extends Controller {
                     'kategoris_id'      => $request->kategoris_id,
                     'tipes_id'          => $request->tipes_id,
                     'nama'              => $request->nama,
-                    'harga'             => General::ubahHargaKeDB($request->harga),
+                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
                     'stok'              => $request->stok,
                 ];
                 Barang::insert($data);

@@ -146,7 +146,7 @@
                                         <label class="mdl-textfield__label" for="barangs_id">Barang</label>
                                         <select class="form-control select2" id="barangs_id" name="barangs_id[]">
                                             @foreach($barangs as $barang)
-                                                <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga) }}" {{ Request::old('barangs_id.*') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                                <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old('barangs_id.*') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -170,7 +170,7 @@
                                             <label class="mdl-textfield__label" for="barangs_id">Barang</label>
                                             <select class="form-control select2" id="barangs_id" name="barangs_id[]">
                                                 @foreach($barangs as $barang)
-                                                    <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga) }}" {{ Request::old('barangs_id.'.$total_form) == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                                    <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old('barangs_id.'.$total_form) == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -276,7 +276,7 @@
                                                             @php($selected = 'selected')
                                                         @endif
                                                     @endif
-                                                    <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga) }}" {{ $selected }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                                    <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ $selected }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -301,7 +301,7 @@
                                             <label class="mdl-textfield__label" for="barangs_id">Barang</label>
                                             <select class="form-control select2" id="barangs_id" name="barangs_id[]">
                                                 @foreach($barangs as $barang)
-                                                    <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga) }}" {{ Request::old('barangs_id.'.$total_form) == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
+                                                    <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old('barangs_id.'.$total_form) == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -339,13 +339,16 @@
     <script type="text/javascript" src="{{ URL::asset('template/vendors/select2/dist/js/select2.full.min.js') }}"></script>
     <script>
         var addButtonHTML, removeButtonHTML;
+                $('.select2').select2({
+                    width: '100%',
+                });
         $(document).ready(function () {
             var inputRowHTML    = '<div class="mdl-grid dynamicformbarang">'+
                                     '<div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
                                         '<label class="mdl-textfield__label" for="barangs_id">Barang</label>'+
                                         '<select class="form-control select2" id="barangs_id" name="barangs_id[]">'+
                                             @foreach($barangs as $barang)
-                                                '<option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga) }}" {{ Request::old("barangs_id.*") == $barang->id_barangs ? $select="selected" : $select="" }}>{{ $barang->nama_kategoris." / ".$barang->nama_merks." / ".$barang->nama_tipes." / ".$barang->nama_barangs }}</option>'+
+                                                '<option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old("barangs_id.*") == $barang->id_barangs ? $select="selected" : $select="" }}>{{ $barang->nama_kategoris." / ".$barang->nama_merks." / ".$barang->nama_tipes." / ".$barang->nama_barangs }}</option>'+
                                             @endforeach
                                         '</select>'+
                                     '</div>'+
@@ -391,25 +394,27 @@
             $('.dynamicformbarang').find(".add-more").remove();
             $('.dynamicformbarang').last().find(".mdl-cell--1-col").append(addButtonHTML);
 
-            $('.select2').select2({
-                width: '100%',
-            });
-
             $('.priceformat').priceFormat({
                 clearPrefix: true,
                 allowNegative: true,
             });
 
-            var hargabarang = $('.dynamicformbarang').find('#barangs_id').find(':selected').data('harga');
-            $('.dynamicformbarang').find('#barangs_id').parent().parent().find('#harga').val(hargabarang);
+            @if (Request::segment(2) != 'edit')
+                var hargabarang = $('.dynamicformbarang').find('#barangs_id').find(':selected').data('harga');
+                $('.dynamicformbarang').find('#barangs_id').parent().parent().find('#harga').val(hargabarang);
+            @endif
+
             $('.dynamicformbarang').find('#barangs_id').on('change', function() {
                 var hargabarang = $(this).find(':selected').data('harga');
                 $(this).parent().parent().find('#harga').val(hargabarang);
             });
         }
 
-        var hargabarang = $('.dynamicformbarang').find('#barangs_id').find(':selected').data('harga');
-        $('.dynamicformbarang').find('#barangs_id').parent().parent().find('#harga').val(hargabarang);
+        @if (Request::segment(2) != 'edit')
+            var hargabarang = $('.dynamicformbarang').find('#barangs_id').find(':selected').data('harga');
+            $('.dynamicformbarang').find('#barangs_id').parent().parent().find('#harga').val(hargabarang);
+        @endif
+
         $('.dynamicformbarang').find('#barangs_id').on('change', function() {
             var hargabarang = $(this).find(':selected').data('harga');
             $(this).parent().parent().find('#harga').val(hargabarang);

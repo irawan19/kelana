@@ -35,7 +35,7 @@
                             <th class="mdl-data-table__cell--non-numeric">Merk</th>
                             <th class="mdl-data-table__cell--non-numeric">Tipe</th>
                             <th class="mdl-data-table__cell--non-numeric">Nama</th>
-                            <th class="mdl-data-table__cell--non-numeric">Harga</th>
+                            <th class="mdl-data-table__cell--non-numeric">Harga Jual</th>
                             <th class="mdl-data-table__cell--non-numeric">Stok</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Edit</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Hapus</th>
@@ -51,7 +51,7 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_merks }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_tipes }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_barangs }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga) }}</td>
+                                        <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->stok }}</td>
                                         <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('barang/edit/'.$barang->id_barangs.'?page='.$barangs->currentPage())}}
@@ -122,10 +122,10 @@
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input priceformat" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />
-                                    <label class="mdl-textfield__label" for="harga">Harga</label>
+                                    <input class="mdl-textfield__input priceformat" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga_jual') }}" />
+                                    <label class="mdl-textfield__label" for="harga_jual">Harga</label>
                                 </div>
-                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga'))}}
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga_jual'))}}
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -134,6 +134,56 @@
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('stok'))}}
                             </div>
+
+                            @if(empty(Request::old('suppliers_id')))
+                                <div class="mdl-grid dynamicformsupplier">
+                                    <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                        <label class="mdl-textfield__label" for="suppliers_id">Barang</label>
+                                        <select class="form-control select2" id="suppliers_id" name="suppliers_id[]">
+                                            @foreach($suppliers as $supplier)
+                                                <option value="{{ $supplier->id_suppliers }}" {{ Request::old('suppliers_id.*') == $supplier->id_suppliers ? $select='selected' : $select='' }}>{{ $supplier->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                        <input class="priceformat mdl-textfield__input" type="text" id="harga_beli" name="harga_beli[]" value="{{ Request::old('harga_beli.*') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga_beli.*') }}" />
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                        <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                                            <i class="material-icons">create</i>
+                                            <span class="mdl-button__ripple-container">
+                                                <span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            @else
+                                @php($get_total_form = count(Request::old('suppliers_id')))
+                                @for($total_form = 0; $total_form < $get_total_form; $total_form++)
+                                    <div class="mdl-grid dynamicformsupplier">
+                                        <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <label class="mdl-textfield__label" for="suppliers_id">Barang</label>
+                                            <select class="form-control select2" id="suppliers_id" name="suppliers_id[]">
+                                                @foreach($suppliers as $supplier)
+                                                    <option value="{{ $supplier->id_suppliers }}" {{ Request::old('suppliers_id.'.$total_form) == $supplier->id_suppliers ? $select='selected' : $select='' }}>{{ $supplier->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <input class="priceformat mdl-textfield__input" type="text" id="harga_beli" name="harga_beli[]" value="{{ Request::old('harga_beli.'.$total_form) == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga_beli.'.$total_form) }}" />
+                                        </div>
+                                        <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
+                                            <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                                                <i class="material-icons">create</i>
+                                                <span class="mdl-button__ripple-container">
+                                                    <span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endfor
+                            @endif
+
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
                             </div>
@@ -196,10 +246,10 @@
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input priceformat" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga($edit_barangs->harga) : Request::old('harga') }}" autofocus />
-                                    <label class="mdl-textfield__label" for="harga">Harga</label>
+                                    <input class="mdl-textfield__input priceformat" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') == '' ? \App\Helpers\General::ubahDBKeHarga($edit_barangs->harga_jual) : Request::old('harga_jual') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="harga_jual">Harga</label>
                                 </div>
-                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga'))}}
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga_jual'))}}
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
