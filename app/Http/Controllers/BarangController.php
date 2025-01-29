@@ -14,8 +14,7 @@ class BarangController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
-                                                            barangs.harga_jual,
-                                                            barangs.harga_beli,
+                                                            barangs.harga,
                                                             barangs.stok,
                                                             kategoris.nama as nama_kategoris,
                                                             merks.nama as nama_merks,
@@ -45,8 +44,7 @@ class BarangController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
-                                                            barangs.harga_jual,
-                                                            barangs.harga_beli,
+                                                            barangs.harga,
                                                             barangs.stok,
                                                             kategoris.nama as nama_kategoris,
                                                             merks.nama as nama_merks,
@@ -74,8 +72,7 @@ class BarangController extends Controller {
             'kategoris_id'      => 'required',
             'tipes_id'          => 'required',
             'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
-            'harga_jual'        => 'required',
-            'harga_beli'        => 'required',
+            'harga'             => 'required',
             'stok'              => 'required',
         ];
         $this->validate($request, $aturan);
@@ -86,8 +83,7 @@ class BarangController extends Controller {
                 'kategoris_id'      => $request->kategoris_id,
                 'tipes_id'          => $request->tipes_id,
                 'nama'              => $request->nama,
-                'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                'harga_beli'        => General::ubahHargaKeDB($request->harga_beli),
+                'harga'             => General::ubahHargaKeDB($request->harga),
                 'stok'              => $request->stok,
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
@@ -125,8 +121,7 @@ class BarangController extends Controller {
             $data['hasil_kata']     = $hasil_kata;
             $data['barangs']        = Barang::selectRaw('barangs.id as id_barangs,
                                                         barangs.nama as nama_barangs,
-                                                        barangs.harga_jual,
-                                                        barangs.harga_beli,
+                                                        barangs.harga,
                                                         barangs.stok,
                                                         kategoris.nama as nama_kategoris,
                                                         merks.nama as nama_merks,
@@ -158,8 +153,7 @@ class BarangController extends Controller {
                 'kategoris_id'      => 'required',
                 'tipes_id'          => 'required',
                 'nama'              => 'required|unique:merks,nama,'.$id.',id',
-                'harga_jual'        => 'required',
-                'harga_beli'        => 'required',
+                'harga'             => 'required',
                 'stok'              => 'required',
             ];
             $this->validate($request, $aturan);
@@ -170,8 +164,7 @@ class BarangController extends Controller {
                     'kategoris_id'      => $request->kategoris_id,
                     'tipes_id'          => $request->tipes_id,
                     'nama'              => $request->nama,
-                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                    'harga_beli'        => General::ubahHargaKeDB($request->harga_beli),
+                    'harga'             => General::ubahHargaKeDB($request->harga),
                     'stok'              => $request->stok,
                 ];
                 
@@ -183,8 +176,7 @@ class BarangController extends Controller {
                     'kategoris_id'      => $request->kategoris_id,
                     'tipes_id'          => $request->tipes_id,
                     'nama'              => $request->nama,
-                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                    'harga_beli'        => General::ubahHargaKeDB($request->harga_beli),
+                    'harga'             => General::ubahHargaKeDB($request->harga),
                     'stok'              => $request->stok,
                 ];
                 Barang::insert($data);

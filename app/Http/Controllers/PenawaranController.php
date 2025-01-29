@@ -14,8 +14,7 @@ class PenawaranController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
-                                                            barangs.harga_jual,
-                                                            barangs.harga_beli,
+                                                            barangs.harga,
                                                             barangs.stok,
                                                             kategoris.nama as nama_kategoris,
                                                             merks.nama as nama_merks,
@@ -39,8 +38,7 @@ class PenawaranController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
-                                                            barangs.harga_jual,
-                                                            barangs.harga_beli,
+                                                            barangs.harga,
                                                             barangs.stok,
                                                             kategoris.nama as nama_kategoris,
                                                             merks.nama as nama_merks,
@@ -131,8 +129,7 @@ class PenawaranController extends Controller {
                                                 ->paginate(10);
             $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                                 barangs.nama as nama_barangs,
-                                                                barangs.harga_jual,
-                                                                barangs.harga_beli,
+                                                                barangs.harga,
                                                                 barangs.stok,
                                                                 kategoris.nama as nama_kategoris,
                                                                 merks.nama as nama_merks,

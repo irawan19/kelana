@@ -35,8 +35,7 @@
                             <th class="mdl-data-table__cell--non-numeric">Merk</th>
                             <th class="mdl-data-table__cell--non-numeric">Tipe</th>
                             <th class="mdl-data-table__cell--non-numeric">Nama</th>
-                            <th class="mdl-data-table__cell--non-numeric">Harga Jual</th>
-                            <th class="mdl-data-table__cell--non-numeric">Harga Beli</th>
+                            <th class="mdl-data-table__cell--non-numeric">Harga</th>
                             <th class="mdl-data-table__cell--non-numeric">Stok</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Edit</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Hapus</th>
@@ -52,8 +51,7 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_merks }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_tipes }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_barangs }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}</td>
-                                        <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_beli) }}</td>
+                                        <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga) }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->stok }}</td>
                                         <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('barang/edit/'.$barang->id_barangs.'?page='.$barangs->currentPage())}}
@@ -65,8 +63,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="10" class="center-align">Tidak ada data ditampilkan</td>
-								    <td style="display:none"></td>
+                                    <td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
 								    <td style="display:none"></td>
 								    <td style="display:none"></td>
 								    <td style="display:none"></td>
@@ -125,17 +122,10 @@
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input priceformat" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga_jual') }}" />
-                                    <label class="mdl-textfield__label" for="harga_jual">Harga Jual</label>
+                                    <input class="mdl-textfield__input priceformat" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga') }}" />
+                                    <label class="mdl-textfield__label" for="harga">Harga</label>
                                 </div>
-                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga_jual'))}}
-                            </div>
-                            <div class="mdl-grid">
-                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input priceformat" type="text" id="harga_beli" name="harga_beli" value="{{ Request::old('harga_beli') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga_beli') }}" />
-                                    <label class="mdl-textfield__label" for="harga_beli">Harga Beli</label>
-                                </div>
-                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga_beli'))}}
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga'))}}
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -206,17 +196,10 @@
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input priceformat" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') == '' ? \App\Helpers\General::ubahDBKeHarga($edit_barangs->harga_jual) : Request::old('harga_jual') }}" autofocus />
-                                    <label class="mdl-textfield__label" for="harga_jual">Harga Jual</label>
+                                    <input class="mdl-textfield__input priceformat" type="text" id="harga" name="harga" value="{{ Request::old('harga') == '' ? \App\Helpers\General::ubahDBKeHarga($edit_barangs->harga) : Request::old('harga') }}" autofocus />
+                                    <label class="mdl-textfield__label" for="harga">Harga</label>
                                 </div>
-                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga_jual'))}}
-                            </div>
-                            <div class="mdl-grid">
-                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input priceformat" type="text" id="harga_beli" name="harga_beli" value="{{ Request::old('harga_beli') == '' ? \App\Helpers\General::ubahDBKeHarga($edit_barangs->harga_beli) : Request::old('harga_beli') }}" autofocus />
-                                    <label class="mdl-textfield__label" for="harga_beli">Harga Beli</label>
-                                </div>
-                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga_beli'))}}
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('harga'))}}
                             </div>
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

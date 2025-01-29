@@ -20,13 +20,13 @@
                         <i class="material-icons" role="presentation">person</i>
                         Tipe
                     </a>
-                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'barang' ? 'current' : '' }}" href="{{URL('/barang')}}">
-                        <i class="material-icons">list</i>
-                        Barang
-                    </a>
                     <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'supplier' ? 'current' : '' }}" href="{{URL('/supplier')}}">
                         <i class="material-icons">account_box</i>
                         Supplier
+                    </a>
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'barang' ? 'current' : '' }}" href="{{URL('/barang')}}">
+                        <i class="material-icons">list</i>
+                        Barang
                     </a>
                     <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'penawaran' ? 'current' : '' }}" href="{{URL('/penawaran')}}">
                         <i class="material-icons">book</i>
