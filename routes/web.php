@@ -7,8 +7,9 @@ use App\Http\Controllers\AkunController as Akun;
 use App\Http\Controllers\KategoriController as Kategori;
 use App\Http\Controllers\TipeController as Tipe;
 use App\Http\Controllers\MerkController as Merk;
-use App\Http\Controllers\BarangController as Barang;
 use App\Http\Controllers\SupplierController as Supplier;
+use App\Http\Controllers\BarangController as Barang;
+use App\Http\Controllers\SupplierBarangController as SupplierBarang;
 use App\Http\Controllers\PenawaranController as Penawaran;
 use App\Http\Controllers\AdminController as Admin;
 
@@ -58,16 +59,6 @@ Route::middleware([
         Route::delete('/hapus/{id}', [Merk::class, 'hapus']);
     });
 
-    //Barang
-    Route::group(['prefix' => 'barang'], function() {
-        Route::get('/', [Barang::class, 'index']);
-        Route::get('/cari', [Barang::class, 'cari']);
-        Route::post('/prosestambah', [Barang::class, 'prosestambah']);
-        Route::get('/edit/{id}', [Barang::class, 'edit']);
-        Route::patch('/prosesedit/{id}', [Barang::class, 'prosesedit']);
-        Route::delete('/hapus/{id}', [Barang::class, 'hapus']);
-    });
-
     //Supplier
     Route::group(['prefix' => 'supplier'], function() {
         Route::get('/', [Supplier::class, 'index']);
@@ -78,12 +69,31 @@ Route::middleware([
         Route::delete('/hapus/{id}', [Supplier::class, 'hapus']);
     });
 
+    //Barang
+    Route::group(['prefix' => 'barang'], function() {
+        Route::get('/', [Barang::class, 'index']);
+        Route::get('/cari', [Barang::class, 'cari']);
+        Route::post('/prosestambah', [Barang::class, 'prosestambah']);
+        Route::get('/edit/{id}', [Barang::class, 'edit']);
+        Route::patch('/prosesedit/{id}', [Barang::class, 'prosesedit']);
+        Route::delete('/hapus/{id}', [Barang::class, 'hapus']);
+    });
+
+    //Supplier Barang
+    Route::group(['prefix' => 'supplier-barang'], function() {
+        Route::get('/', [SupplierBarang::class, 'index']);
+        Route::get('/cari', [SupplierBarang::class, 'cari']);
+        Route::post('/prosestambah', [SupplierBarang::class, 'prosestambah']);
+        Route::get('/edit/{id}', [SupplierBarang::class, 'edit']);
+        Route::patch('/prosesedit/{id}', [SupplierBarang::class, 'prosesedit']);
+        Route::delete('/hapus/{id}', [SupplierBarang::class, 'hapus']);
+    });
+
     //Penawaran
     Route::group(['prefix' => 'penawaran'], function() {
         Route::get('/', [Penawaran::class, 'index']);
         Route::get('/cari', [Penawaran::class, 'cari']);
         Route::post('/prosestambah', [Penawaran::class, 'prosestambah']);
-        Route::get('/baca/{id}', [Penawaran::class, 'baca']);
         Route::get('/edit/{id}', [Penawaran::class, 'edit']);
         Route::patch('/prosesedit/{id}', [Penawaran::class, 'prosesedit']);
         Route::delete('/hapus/{id}', [Penawaran::class, 'hapus']);

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('barangs_id')->references('id')->on('barangs')->onUpdate('set null')->onDelete('set null');
             $table->double('harga_beli');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

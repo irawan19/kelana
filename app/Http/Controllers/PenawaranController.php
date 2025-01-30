@@ -122,11 +122,13 @@ class PenawaranController extends Controller {
     public function edit(Request $request, $id) {
         $cek = Penawaran::find($id);
         if (!empty($cek)) {
-            $hasil_kata             = session('hasil_kata');
-            $data['hasil_kata']     = $hasil_kata;
-            $data['penawarans']     = Penawaran::Where('nama', 'LIKE', '%'.$hasil_kata.'%')
-                                                ->orderBy('nama')
-                                                ->paginate(10);
+            $hasil_kata                     = session('hasil_kata');
+            $data['hasil_kata']             = $hasil_kata;
+            $data['penawarans']             = Penawaran::Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
+                                                        ->orWhere('perusahaan', 'LIKE', '%'.$hasil_kata.'%')
+                                                        ->orWhere('alamat', 'LIKE', '%'.$hasil_kata.'%')
+                                                        ->orderBy('no')
+                                                        ->paginate(10);
             $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                                 barangs.nama as nama_barangs,
                                                                 barangs.harga_jual,
@@ -139,7 +141,7 @@ class PenawaranController extends Controller {
                                                     ->join('merks','merks.id','tipes.merks_id')
                                                     ->orderBy('barangs.nama')
                                                     ->get();
-            $data['edit_penawarans']= Penawaran::find($id);
+            $data['edit_penawarans']        = Penawaran::find($id);
             $data['edit_penawaran_barangs'] = Penawaran_barang::where('penawarans_id',$id)->get();
             return view('penawaran.lihat', $data);
         } else {

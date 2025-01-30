@@ -5,8 +5,6 @@ use Illuminate\Http\Request;
 use App\Models\Kategori;
 use App\Models\Tipe;
 use App\Models\Barang;
-use App\Models\Supplier;
-use App\Models\Supplier_barang;
 use App\Helpers\General;
 
 class BarangController extends Controller {
@@ -27,7 +25,6 @@ class BarangController extends Controller {
                                                 ->orderBy('barangs.nama')
                                                 ->paginate(10);
         $data['kategoris']              = Kategori::orderBy('nama')->get();
-        $data['suppliers']              = Supplier::orderBy('nama')->get();
         $data['tipes']                  = Tipe::selectRaw('tipes.id as id_tipes,
                                                             tipes.nama as nama_tipes,
                                                             merks.id as id_merks,
@@ -58,7 +55,6 @@ class BarangController extends Controller {
                                                 ->orderBy('barangs.nama')
                                                 ->paginate(10);
         $data['kategoris']              = Kategori::orderBy('nama')->get();
-        $data['suppliers']              = Supplier::orderBy('nama')->get();
         $data['tipes']                  = Tipe::selectRaw('tipes.id as id_tipes,
                                                 tipes.nama as nama_tipes,
                                                 merks.id as id_merks,
@@ -92,15 +88,6 @@ class BarangController extends Controller {
                 'created_at'        => date('Y-m-d H:i:s'),
             ];
             $id_barangs = Barang::insertGetId($data);
-
-            foreach($request->suppliers_id as $key => $suppliers_id) {
-                $supplier_barang_data = [
-                    'suppliers_id'  => $suppliers_id,
-                    'barangs_id'    => $id_barangs,
-                    'harga_beli'    => General::ubahHargaKeDB($request->harga_beli[$key]),
-                ];
-                Supplier_barang::insert($supplier_barang_data);
-            }
 
             $setelah_simpan = [
                 'alert'                     => 'sukses',
@@ -146,8 +133,6 @@ class BarangController extends Controller {
                                             ->paginate(10);
             $data['edit_barangs']   = Barang::find($id);
             $data['kategoris']              = Kategori::orderBy('nama')->get();
-            $data['suppliers']              = Supplier::orderBy('nama')->get();
-            $data['edit_supplier_barangs'] = Supplier_barang::where('barangs_id',$id)->get();
             $data['tipes']          = Tipe::selectRaw('tipes.id as id_tipes,
                                                         tipes.nama as nama_tipes,
                                                         merks.id as id_merks,
@@ -195,16 +180,6 @@ class BarangController extends Controller {
                     'stok'              => $request->stok,
                 ];
                 Barang::insert($data);
-            }
-
-            Supplier_barang::where('barangs_id',$id)->delete();
-            foreach($request->suppliers_id as $key => $suppliers_id) {
-                $supplier_barang_data = [
-                    'suppliers_id'  => $suppliers_id,
-                    'barangs_id'    => $id,
-                    'harga_beli'    => General::ubahHargaKeDB($request->harga_beli[$key]),
-                ];
-                Supplier_barang::insert($supplier_barang_data);
             }
                 
             $setelah_simpan = [

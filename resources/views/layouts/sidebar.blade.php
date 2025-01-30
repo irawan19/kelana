@@ -28,6 +28,10 @@
                         <i class="material-icons">list</i>
                         Barang
                     </a>
+                    <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'supplier-barang' ? 'current' : '' }}" href="{{URL('/supplier-barang')}}">
+                        <i class="material-icons">attach_money</i>
+                        Supplier Barang
+                    </a>
                     <a class="mdl-navigation__link mdl-navigation__link--{{ Request::segment(1) == 'penawaran' ? 'current' : '' }}" href="{{URL('/penawaran')}}">
                         <i class="material-icons">book</i>
                         Penawaran

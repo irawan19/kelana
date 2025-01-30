@@ -22,7 +22,7 @@ class MerkController extends Controller {
         $hasil_kata                     = $request->cari_kata;
         $data['hasil_kata']             = $hasil_kata;
         $url_sekarang                   = $request->fullUrl();
-        $data['merks']                  = Merk::Merk::Where('nama', 'LIKE', '%'.$hasil_kata.'%')
+        $data['merks']                  = Merk::Where('nama', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orderBy('nama')
                                                     ->paginate(10);
         session(['hasil_kata'		    => $hasil_kata]);
