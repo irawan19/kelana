@@ -155,3 +155,60 @@
   .readonlycolor{
     color: #b5b5b5 !important;
   }
+
+
+
+.loaderWrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #333;
+  z-index: 1000;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeLoader 0.05s 1s ease forwards;
+}
+
+.loader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 999;
+}
+.loader .bar {
+  width: 10px;
+  height: 5px;
+  background: #00bcd4;
+  margin: 2px;
+  animation: bar 1s infinite linear;
+}
+.loader .bar:nth-child(1) {
+  animation-delay: 0s;
+}
+.loader .bar:nth-child(2) {
+  animation-delay: 0.25s;
+}
+.loader .bar:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes bar {
+  0% {
+    transform: scaleY(1) scaleX(0.5);
+  }
+  50% {
+    transform: scaleY(10) scaleX(1);
+  }
+  100% {
+    transform: scaleY(1) scaleX(0.5);
+  }
+}
+
+@keyframes fadeLoader {
+  to {
+    opacity: 0;
+  }
+}

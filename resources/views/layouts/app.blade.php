@@ -42,11 +42,16 @@
 <body>
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header is-small-screen">
-    
-    @include('layouts.header')
-    
-    @include('layouts.sidebar')
 
+    <div class="loaderWrapper">
+        <div class="loader">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+    @include('layouts.header')
+    @include('layouts.sidebar')
     <main class="mdl-layout__content">
         @yield('content')
     </main>
