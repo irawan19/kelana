@@ -48,7 +48,7 @@ class PenawaranController extends Controller {
                                                 ->join('merks','merks.id','tipes.merks_id')
                                                 ->orderBy('barangs.nama')
                                                 ->get();
-        $data['penawarans']             = Penawaran::Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
+        $data['penawarans']             = Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orWhere('perusahaan', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orWhere('alamat', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orderBy('no')
@@ -124,7 +124,7 @@ class PenawaranController extends Controller {
         if (!empty($cek)) {
             $hasil_kata                     = session('hasil_kata');
             $data['hasil_kata']             = $hasil_kata;
-            $data['penawarans']             = Penawaran::Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
+            $data['penawarans']             = Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
                                                         ->orWhere('perusahaan', 'LIKE', '%'.$hasil_kata.'%')
                                                         ->orWhere('alamat', 'LIKE', '%'.$hasil_kata.'%')
                                                         ->orderBy('no')
