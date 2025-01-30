@@ -155,7 +155,7 @@ class General
 
 	public static function ubahDBKeHarga($harga = 0)
 	{
-		$db_ke_harga = number_format($harga, 2, ',', '.');
+		$db_ke_harga = number_format($harga, 2, '.', ',');
 		return $db_ke_harga;
 	}
 

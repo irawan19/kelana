@@ -24,7 +24,7 @@ class PenawaranController extends Controller {
                                                 ->join('merks','merks.id','tipes.merks_id')
                                                 ->orderBy('barangs.nama')
                                                 ->get();
-        $data['penawarans']             = Penawaran::orderBy('no')
+        $data['penawarans']             = Penawaran::orderBy('no','desc')
                                                 ->paginate(10);
         session()->forget('hasil_kata');
         session()->forget('halaman');
@@ -51,7 +51,7 @@ class PenawaranController extends Controller {
         $data['penawarans']             = Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orWhere('perusahaan', 'LIKE', '%'.$hasil_kata.'%')
                                                     ->orWhere('alamat', 'LIKE', '%'.$hasil_kata.'%')
-                                                    ->orderBy('no')
+                                                    ->orderBy('no','desc')
                                                     ->paginate(10);
         session(['hasil_kata'		    => $hasil_kata]);
         session(['halaman'              => $url_sekarang]);
@@ -103,6 +103,15 @@ class PenawaranController extends Controller {
             $cek_exist = Penawaran::where('nama',$request->nama)->count();
             if($cek_exist == 0) {
                 Penawaran::where('id',$cek->id)->restore();
+
+                foreach($request->barangs_id as $key => $barangs_id) {
+                    $penawaran_barang_data = [
+                        'penawarans_id' => $id_penawaran,
+                        'barangs_id'    => $barangs_id,
+                        'harga'         => General::ubahHargaKeDB($request->harga[$key]),
+                    ];
+                    Penawaran_barang::insert($penawaran_barang_data);
+                }
                 
                 $setelah_simpan = [
                     'alert'                     => 'sukses',
@@ -127,7 +136,7 @@ class PenawaranController extends Controller {
             $data['penawarans']             = Penawaran::Where('no', 'LIKE', '%'.$hasil_kata.'%')
                                                         ->orWhere('perusahaan', 'LIKE', '%'.$hasil_kata.'%')
                                                         ->orWhere('alamat', 'LIKE', '%'.$hasil_kata.'%')
-                                                        ->orderBy('no')
+                                                        ->orderBy('no','desc')
                                                         ->paginate(10);
             $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                                 barangs.nama as nama_barangs,
