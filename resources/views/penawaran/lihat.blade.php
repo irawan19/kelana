@@ -339,31 +339,13 @@
     <script type="text/javascript" src="{{ URL::asset('template/vendors/select2/dist/js/select2.full.min.js') }}"></script>
     <script>
         var addButtonHTML, removeButtonHTML;
-                $('.select2').select2({
-                    width: '100%',
-                });
+        var count  = 1;
         $(document).ready(function () {
-            var inputRowHTML    = '<div class="mdl-grid dynamicformbarang">'+
-                                    '<div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
-                                        '<label class="mdl-textfield__label" for="barangs_id">Barang</label>'+
-                                        '<select class="form-control select2" id="barangs_id" name="barangs_id[]">'+
-                                            @foreach($barangs as $barang)
-                                                '<option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old("barangs_id.*") == $barang->id_barangs ? $select="selected" : $select="" }}>{{ $barang->nama_kategoris." / ".$barang->nama_merks." / ".$barang->nama_tipes." / ".$barang->nama_barangs }}</option>'+
-                                            @endforeach
-                                        '</select>'+
-                                    '</div>'+
-                                    '<div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
-                                        '<input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old("harga.*") == "" ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old("harga.*") }}" />'+
-                                    '</div>'+
-                                    '<div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
-                                        '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
-                                            '<i class="material-icons">create</i>'+
-                                            '<span class="mdl-button__ripple-container">'+
-                                                '<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>'+
-                                            '</span>'+
-                                        '</button>'+
-                                    '</div>'+
-                                '</div>';
+            $('.select2').select2({
+                width: '100%',
+            });
+
+            
             addButtonHTML       = '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
                                     '<i class="material-icons">create</i>'+
                                     '<span class="mdl-button__ripple-container">'+
@@ -378,6 +360,28 @@
                                 '</button>';
 
             $("body").on("click", ".add-more", function () {
+                count++
+                var inputRowHTML    = '<div class="mdl-grid dynamicformbarang">'+
+                                    '<div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
+                                        '<label class="mdl-textfield__label" for="barangs_id">Barang</label>'+
+                                        '<select class="form-control select2" id="barangs_id'+count+'" name="barangs_id[]">'+
+                                            @foreach($barangs as $barang)
+                                                '<option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old("barangs_id.*") == $barang->id_barangs ? $select="selected" : $select="" }}>{{ $barang->nama_kategoris." / ".$barang->nama_merks." / ".$barang->nama_tipes." / ".$barang->nama_barangs }}</option>'+
+                                            @endforeach
+                                        '</select>'+
+                                    '</div>'+
+                                    '<div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
+                                        '<input class="priceformat mdl-textfield__input" type="text" id="harga'+count+'" name="harga[]" value="{{ Request::old("harga.*") == "" ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old("harga.*") }}" />'+
+                                    '</div>'+
+                                    '<div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
+                                        '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
+                                            '<i class="material-icons">create</i>'+
+                                            '<span class="mdl-button__ripple-container">'+
+                                                '<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>'+
+                                            '</span>'+
+                                        '</button>'+
+                                    '</div>'+
+                                '</div>';
                 $(".dynamicformbarang").last().before(inputRowHTML);
                 showAddRemoveIcon();
             });
@@ -393,6 +397,10 @@
 
             $('.dynamicformbarang').find(".add-more").remove();
             $('.dynamicformbarang').last().find(".mdl-cell--1-col").append(addButtonHTML);
+            
+            $('.select2').select2({
+                width: '100%',
+            });
 
             $('.priceformat').priceFormat({
                 clearPrefix: true,
