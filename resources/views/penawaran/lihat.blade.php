@@ -143,15 +143,14 @@
                             @if(empty(Request::old('barangs_id')))
                                 <div class="mdl-grid dynamicformbarang">
                                     <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                        <label class="mdl-textfield__label" for="barangs_id">Barang</label>
-                                        <select class="form-control select2" id="barangs_id" name="barangs_id[]">
+                                        <select class="form-control select2" id="barangs_id1" name="barangs_id[]">
                                             @foreach($barangs as $barang)
                                                 <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old('barangs_id.*') == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                        <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.*') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.*') }}" />
+                                        <input class="priceformat mdl-textfield__input" type="text" id="harga1" name="harga[]" value="{{ Request::old('harga.*') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.*') }}" />
                                     </div>
                                     <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                         <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
@@ -167,7 +166,6 @@
                                 @for($total_form = 0; $total_form < $get_total_form; $total_form++)
                                     <div class="mdl-grid dynamicformbarang">
                                         <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                            <label class="mdl-textfield__label" for="barangs_id">Barang</label>
                                             <select class="form-control select2" id="barangs_id" name="barangs_id[]">
                                                 @foreach($barangs as $barang)
                                                     <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old('barangs_id.'.$total_form) == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
@@ -260,11 +258,11 @@
                             </div>
 
                             @if(empty(Request::old('barangs_id')))
+                                @php($no_count = 1)
                                 @foreach($edit_penawaran_barangs as $penawaran_barang)
                                     <div class="mdl-grid dynamicformbarang">
                                         <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                            <label class="mdl-textfield__label" for="barangs_id">Barang</label>
-                                            <select class="form-control select2" id="barangs_id" name="barangs_id[]">
+                                            <select class="form-control select2" id="barangs_id{{$no_count}}" name="barangs_id[]">
                                                 @foreach($barangs as $barang)
                                                     @php($selected = '')
                                                     @if(Request::old('barangs_id') == '')
@@ -281,7 +279,7 @@
                                             </select>
                                         </div>
                                         <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                            <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.*') == '' ? \App\Helpers\General::ubahDBKeHarga($penawaran_barang->harga) : Request::old('harga.*') }}" />
+                                            <input class="priceformat mdl-textfield__input" type="text" id="harga{{$no_count}}" name="harga[]" value="{{ Request::old('harga.*') == '' ? \App\Helpers\General::ubahDBKeHarga($penawaran_barang->harga) : Request::old('harga.*') }}" />
                                         </div>
                                         <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                             <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
@@ -292,21 +290,22 @@
                                             </button>
                                         </div>
                                     </div>
+                                    @php($no_count++)
                                 @endforeach
                             @else
                                 @php($get_total_form = count(Request::old('barangs_id')))
+                                @php($no_count = 1)
                                 @for($total_form = 0; $total_form < $get_total_form; $total_form++)
                                     <div class="mdl-grid dynamicformbarang">
                                         <div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                            <label class="mdl-textfield__label" for="barangs_id">Barang</label>
-                                            <select class="form-control select2" id="barangs_id" name="barangs_id[]">
+                                            <select class="form-control select2" id="barangs_id{{$no_count}}" name="barangs_id[]">
                                                 @foreach($barangs as $barang)
                                                     <option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old('barangs_id.'.$total_form) == $barang->id_barangs ? $select='selected' : $select='' }}>{{ $barang->nama_kategoris.' / '.$barang->nama_merks.' / '.$barang->nama_tipes.' / '.$barang->nama_barangs }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="mdl-cell mdl-cell--5-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
-                                            <input class="priceformat mdl-textfield__input" type="text" id="harga" name="harga[]" value="{{ Request::old('harga.'.$total_form) == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.'.$total_form) }}" />
+                                            <input class="priceformat mdl-textfield__input" type="text" id="harga{{$no_count}}" name="harga[]" value="{{ Request::old('harga.'.$total_form) == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga.'.$total_form) }}" />
                                         </div>
                                         <div class="mdl-cell mdl-cell--1-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">
                                             <button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
@@ -317,6 +316,7 @@
                                             </button>
                                         </div>
                                     </div>
+                                    @php($no_count++)
                                 @endfor
                             @endif
 
@@ -339,13 +339,8 @@
     <script type="text/javascript" src="{{ URL::asset('template/vendors/select2/dist/js/select2.full.min.js') }}"></script>
     <script>
         var addButtonHTML, removeButtonHTML;
-        var count  = 1;
         $(document).ready(function () {
-            $('.select2').select2({
-                width: '100%',
-            });
-
-            
+            var count  = $('.dynamicformbarang').length;
             addButtonHTML       = '<button type="button" class="add-more mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">'+
                                     '<i class="material-icons">create</i>'+
                                     '<span class="mdl-button__ripple-container">'+
@@ -363,7 +358,6 @@
                 count++
                 var inputRowHTML    = '<div class="mdl-grid dynamicformbarang">'+
                                     '<div class="mdl-cell mdl-cell--6-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded">'+
-                                        '<label class="mdl-textfield__label" for="barangs_id">Barang</label>'+
                                         '<select class="form-control select2" id="barangs_id'+count+'" name="barangs_id[]">'+
                                             @foreach($barangs as $barang)
                                                 '<option value="{{ $barang->id_barangs }}" data-harga="{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}" {{ Request::old("barangs_id.*") == $barang->id_barangs ? $select="selected" : $select="" }}>{{ $barang->nama_kategoris." / ".$barang->nama_merks." / ".$barang->nama_tipes." / ".$barang->nama_barangs }}</option>'+
@@ -383,6 +377,13 @@
                                     '</div>'+
                                 '</div>';
                 $(".dynamicformbarang").last().before(inputRowHTML);
+                var hargabarang = $('.dynamicformbarang').find('#barangs_id'+count).find(':selected').data('harga');
+                $('.dynamicformbarang').find('.select2').parent().parent().find('#harga'+count).val(hargabarang);
+
+                $('.dynamicformbarang').find('#barangs_id'+count).on('change', function() {
+                    var hargabarang = $(this).find(':selected').data('harga');
+                    $(this).parent().parent().find('#harga'+count).val(hargabarang);
+                });
                 showAddRemoveIcon();
             });
 
@@ -397,7 +398,7 @@
 
             $('.dynamicformbarang').find(".add-more").remove();
             $('.dynamicformbarang').last().find(".mdl-cell--1-col").append(addButtonHTML);
-            
+
             $('.select2').select2({
                 width: '100%',
             });
@@ -406,26 +407,16 @@
                 clearPrefix: true,
                 allowNegative: true,
             });
-
-            @if (Request::segment(2) != 'edit')
-                var hargabarang = $('.dynamicformbarang').find('#barangs_id').find(':selected').data('harga');
-                $('.dynamicformbarang').find('#barangs_id').parent().parent().find('#harga').val(hargabarang);
-            @endif
-
-            $('.dynamicformbarang').find('#barangs_id').on('change', function() {
-                var hargabarang = $(this).find(':selected').data('harga');
-                $(this).parent().parent().find('#harga').val(hargabarang);
-            });
         }
 
         @if (Request::segment(2) != 'edit')
-            var hargabarang = $('.dynamicformbarang').find('#barangs_id').find(':selected').data('harga');
-            $('.dynamicformbarang').find('#barangs_id').parent().parent().find('#harga').val(hargabarang);
+            var hargabarang = $('.dynamicformbarang').find('#barangs_id1').find(':selected').data('harga');
+            $('.dynamicformbarang').find('.select2').parent().parent().find('#harga1').val(hargabarang);
         @endif
 
-        $('.dynamicformbarang').find('#barangs_id').on('change', function() {
+        $('.dynamicformbarang').find('#barangs_id1').on('change', function() {
             var hargabarang = $(this).find(':selected').data('harga');
-            $(this).parent().parent().find('#harga').val(hargabarang);
+            $(this).parent().parent().find('#harga1').val(hargabarang);
         });
     </script>
 
