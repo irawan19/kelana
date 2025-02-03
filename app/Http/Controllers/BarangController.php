@@ -52,6 +52,10 @@ class BarangController extends Controller {
                                                 ->join('kategoris','kategoris.id','barangs.kategoris_id')
                                                 ->join('tipes','tipes.id','barangs.tipes_id')
                                                 ->join('merks','merks.id','tipes.merks_id')
+                                                ->where('kategoris.nama', 'LIKE', '%'.$hasil_kata.'%')
+                                                ->orWhere('merks.nama', 'LIKE', '%'.$hasil_kata.'%')
+                                                ->orWhere('tipes.nama', 'LIKE', '%'.$hasil_kata.'%')
+                                                ->orWhere('barangs.nama', 'LIKE', '%'.$hasil_kata.'%')
                                                 ->orderBy('barangs.nama')
                                                 ->paginate(10);
         $data['kategoris']              = Kategori::orderBy('nama')->get();
@@ -119,18 +123,22 @@ class BarangController extends Controller {
         if (!empty($cek)) {
             $hasil_kata             = session('hasil_kata');
             $data['hasil_kata']     = $hasil_kata;
-            $data['barangs']        = Barang::selectRaw('barangs.id as id_barangs,
-                                                        barangs.nama as nama_barangs,
-                                                        barangs.harga_jual,
-                                                        barangs.stok,
-                                                        kategoris.nama as nama_kategoris,
-                                                        merks.nama as nama_merks,
-                                                        tipes.nama as nama_tipes')
-                                            ->join('kategoris','kategoris.id','barangs.kategoris_id')
-                                            ->join('tipes','tipes.id','barangs.tipes_id')
-                                            ->join('merks','merks.id','tipes.merks_id')
-                                            ->orderBy('barangs.nama')
-                                            ->paginate(10);
+            $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
+                                                                barangs.nama as nama_barangs,
+                                                                barangs.harga_jual,
+                                                                barangs.stok,
+                                                                kategoris.nama as nama_kategoris,
+                                                                merks.nama as nama_merks,
+                                                                tipes.nama as nama_tipes')
+                                                    ->join('kategoris','kategoris.id','barangs.kategoris_id')
+                                                    ->join('tipes','tipes.id','barangs.tipes_id')
+                                                    ->join('merks','merks.id','tipes.merks_id')
+                                                    ->where('kategoris.nama', 'LIKE', '%'.$hasil_kata.'%')
+                                                    ->orWhere('merks.nama', 'LIKE', '%'.$hasil_kata.'%')
+                                                    ->orWhere('tipes.nama', 'LIKE', '%'.$hasil_kata.'%')
+                                                    ->orWhere('barangs.nama', 'LIKE', '%'.$hasil_kata.'%')
+                                                    ->orderBy('barangs.nama')
+                                                    ->paginate(10);
             $data['edit_barangs']   = Barang::find($id);
             $data['kategoris']              = Kategori::orderBy('nama')->get();
             $data['tipes']          = Tipe::selectRaw('tipes.id as id_tipes,

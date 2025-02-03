@@ -14,6 +14,11 @@ use App\Http\Controllers\PenawaranController as Penawaran;
 use App\Http\Controllers\AdminController as Admin;
 
 
+Route::get('/storage-link', function() {
+    Artisan::call('storage:link'); 
+    return 'The links have been created.';
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
