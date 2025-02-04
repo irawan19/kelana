@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('tipes_id')->references('id')->on('tipes')->onUpdate('set null')->onDelete('set null');
             $table->longtext('nama');
             $table->double('harga_jual');
+            $table->longtext('brosur');
             $table->double('stok');
             $table->timestamps();
             $table->softDeletes();

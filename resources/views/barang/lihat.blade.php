@@ -37,6 +37,7 @@
                             <th class="mdl-data-table__cell--non-numeric">Nama</th>
                             <th class="mdl-data-table__cell--non-numeric">Harga Jual</th>
                             <th class="mdl-data-table__cell--non-numeric">Stok</th>
+                            <th class="mdl-data-table__cell--non-numeric">Brosur</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Edit</th>
                             <th class="mdl-data-table__cell--non-numeric" width="100px">Hapus</th>
                         </tr>
@@ -53,6 +54,11 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_barangs }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->stok }}</td>
+                                        <td class="mdl-data-table__cell--non-numeric">
+                                            @if(!empty($barang->brosur))
+                                                {{\App\Helpers\General::download(URL::asset('storage/'.$barang->brosur))}}
+                                            @endif
+                                        </td>
                                         <td class="mdl-data-table__cell--non-numeric center-align">
                                             {{\App\Helpers\General::edit('barang/edit/'.$barang->id_barangs.'?page='.$barangs->currentPage())}}
                                         </td>
@@ -91,7 +97,7 @@
                         <h1 class="mdl-card__title-text">Tambah</h1>
                     </div>
                     <div class="mdl-card__supporting-text">
-                        <form action="{{ URL('barang/prosestambah') }}" class="form" method="POST">
+                        <form action="{{ URL('barang/prosestambah') }}" class="form" method="POST" enctype="multipart/form-data" >
                             {{ csrf_field() }}
                             <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -134,6 +140,12 @@
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('stok'))}}
                             </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input id="brosur" type="file" name="brosur" accept="application/pdf">
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('brosur'))}}
+                            </div>
                             <div class="mdl-card__actions">
                                 {{\App\Helpers\General::simpan()}}
                             </div>
@@ -144,7 +156,7 @@
                         <h1 class="mdl-card__title-text">Edit</h1>
                     </div>
                     <div class="mdl-card__supporting-text">
-                        <form action="{{ URL('barang/prosesedit/'.$edit_barangs->id) }}" class="form" method="POST">
+                        <form action="{{ URL('barang/prosesedit/'.$edit_barangs->id) }}" class="form" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             @method('PATCH')
                             <div class="mdl-grid">
@@ -207,6 +219,19 @@
                                     <label class="mdl-textfield__label" for="stok">Stok</label>
                                 </div>
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('stok'))}}
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    @if(!empty($edit_barangs->brosur))
+                                        <a href="{{ URL::asset('storage/'.$edit_barangs->brosur) }}" target="_blank" class="text_info">Klik untuk melihat brosur</a>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input id="brosur" type="file" name="brosur" accept="application/pdf">
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('brosur'))}}
                             </div>
                             <div class="mdl-card__actions right-align">
                                 @if(request()->session()->get('halaman') != '')

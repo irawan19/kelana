@@ -6,6 +6,7 @@ use App\Models\Kategori;
 use App\Models\Tipe;
 use App\Models\Barang;
 use App\Helpers\General;
+use Storage;
 
 class BarangController extends Controller {
 
@@ -16,6 +17,7 @@ class BarangController extends Controller {
                                                             barangs.nama as nama_barangs,
                                                             barangs.harga_jual,
                                                             barangs.stok,
+                                                            barangs.brosur,
                                                             kategoris.nama as nama_kategoris,
                                                             merks.nama as nama_merks,
                                                             tipes.nama as nama_tipes')
@@ -46,6 +48,7 @@ class BarangController extends Controller {
                                                             barangs.nama as nama_barangs,
                                                             barangs.harga_jual,
                                                             barangs.stok,
+                                                            barangs.brosur,
                                                             kategoris.nama as nama_kategoris,
                                                             merks.nama as nama_merks,
                                                             tipes.nama as nama_tipes')
@@ -72,26 +75,52 @@ class BarangController extends Controller {
     }
 
     public function prosestambah(Request $request) {
-        $aturan = [
-            'kategoris_id'      => 'required',
-            'tipes_id'          => 'required',
-            'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
-            'harga_jual'        => 'required',
-            'stok'              => 'required',
-        ];
-        $this->validate($request, $aturan);
-
         $cek = Barang::onlyTrashed()->where('nama',$request->nama)->first();
         if (empty($cek)) {
-            $data = [
-                'kategoris_id'      => $request->kategoris_id,
-                'tipes_id'          => $request->tipes_id,
-                'nama'              => $request->nama,
-                'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                'stok'              => $request->stok,
-                'created_at'        => date('Y-m-d H:i:s'),
-            ];
-            $id_barangs = Barang::insertGetId($data);
+            if(empty($request->brosur)) {
+                $aturan = [
+                    'kategoris_id'      => 'required',
+                    'tipes_id'          => 'required',
+                    'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
+                    'harga_jual'        => 'required',
+                    'stok'              => 'required',
+                ];
+                $this->validate($request, $aturan);
+
+                $data = [
+                    'kategoris_id'      => $request->kategoris_id,
+                    'tipes_id'          => $request->tipes_id,
+                    'nama'              => $request->nama,
+                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                    'stok'              => $request->stok,
+                    'created_at'        => date('Y-m-d H:i:s'),
+                ];
+            } else {
+                $aturan = [
+                    'brosur'            => 'required|mimes:pdf',
+                    'kategoris_id'      => 'required',
+                    'tipes_id'          => 'required',
+                    'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
+                    'harga_jual'        => 'required',
+                    'stok'              => 'required',
+                ];
+                $this->validate($request, $aturan);
+
+                $nama_brosur = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('brosur')->getClientOriginalName())));
+                $path_brosur = 'barang/';
+                Storage::disk('public')->put($path_brosur.$nama_brosur, file_get_contents($request->file('brosur')));
+
+                $data = [
+                    'brosur'            => $path_brosur.$nama_brosur,
+                    'kategoris_id'      => $request->kategoris_id,
+                    'tipes_id'          => $request->tipes_id,
+                    'nama'              => $request->nama,
+                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                    'stok'              => $request->stok,
+                    'created_at'        => date('Y-m-d H:i:s'),
+                ];
+            }
+            Barang::insert($data);
 
             $setelah_simpan = [
                 'alert'                     => 'sukses',
@@ -127,6 +156,7 @@ class BarangController extends Controller {
                                                                 barangs.nama as nama_barangs,
                                                                 barangs.harga_jual,
                                                                 barangs.stok,
+                                                                barangs.brosur,
                                                                 kategoris.nama as nama_kategoris,
                                                                 merks.nama as nama_merks,
                                                                 tipes.nama as nama_tipes')
@@ -157,50 +187,129 @@ class BarangController extends Controller {
     public function prosesedit(Request $request, $id) {
         $cek = Barang::find($id);
         if (!empty($cek)) {
-            $aturan = [
-                'kategoris_id'      => 'required',
-                'tipes_id'          => 'required',
-                'nama'              => 'required|unique:merks,nama,'.$id.',id',
-                'harga_jual'        => 'required',
-                'stok'              => 'required',
-            ];
-            $this->validate($request, $aturan);
+            $cek_deleted = Barang::onlyTrashed()->where('nama',$request->nama)->first();
+            if (empty($cek_deleted)) {
+                if(empty($request->brosur)) {
+                    $aturan = [
+                        'kategoris_id'      => 'required',
+                        'tipes_id'          => 'required',
+                        'nama'              => 'required|unique:merks,nama,'.$id.',id',
+                        'harga_jual'        => 'required',
+                        'stok'              => 'required',
+                    ];
+                    $this->validate($request, $aturan);
 
-            $cek = Barang::onlyTrashed()->where('nama',$request->nama)->first();
-            if (empty($cek)) {
-                $data = [
-                    'kategoris_id'      => $request->kategoris_id,
-                    'tipes_id'          => $request->tipes_id,
-                    'nama'              => $request->nama,
-                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                    'stok'              => $request->stok,
-                ];
+                    $data = [
+                        'kategoris_id'      => $request->kategoris_id,
+                        'tipes_id'          => $request->tipes_id,
+                        'nama'              => $request->nama,
+                        'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                        'stok'              => $request->stok,
+                    ];
+                    Barang::find($id)->update($data);
+                } else {
+                    $aturan = [
+                        'brosur'            => 'required|mimes:pdf',
+                        'kategoris_id'      => 'required',
+                        'tipes_id'          => 'required',
+                        'nama'              => 'required|unique:merks,nama,'.$id.',id',
+                        'harga_jual'        => 'required',
+                        'stok'              => 'required',
+                    ];
+                    $this->validate($request, $aturan);
+
+                    $brosur_lama        = $cek->brosur;
+                    if (Storage::disk('public')->exists($brosur_lama))
+                        Storage::disk('public')->delete($brosur_lama);
+
+                    $nama_brosur = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('brosur')->getClientOriginalName())));
+                    $path_brosur = 'barang/';
+                    Storage::disk('public')->put($path_brosur.$nama_brosur, file_get_contents($request->file('brosur')));
+
+                    $data = [
+                        'brosur'            => $path_brosur.$nama_brosur,
+                        'kategoris_id'      => $request->kategoris_id,
+                        'tipes_id'          => $request->tipes_id,
+                        'nama'              => $request->nama,
+                        'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                        'stok'              => $request->stok,
+                    ];
+                    Barang::find($id)->update($data);
+                }
                 
-                Barang::find($id)->update($data);
+                $setelah_simpan = [
+                    'alert'                     => 'sukses',
+                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
+                ];
+    
+                if(request()->session()->get('halaman') != '') {
+                    $url = request()->session()->get('halaman');
+                    return redirect($url)->with('setelah_simpan', $setelah_simpan);
+                }
+                else
+                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             } else {
                 Barang::find($id)->delete();
 
-                $data = [
-                    'kategoris_id'      => $request->kategoris_id,
-                    'tipes_id'          => $request->tipes_id,
-                    'nama'              => $request->nama,
-                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                    'stok'              => $request->stok,
-                ];
+                if(empty($request->brosur)) {
+                    $aturan = [
+                        'kategoris_id'      => 'required',
+                        'tipes_id'          => 'required',
+                        'nama'              => 'required|unique:merks,nama,'.$id.',id',
+                        'harga_jual'        => 'required',
+                        'stok'              => 'required',
+                    ];
+                    $this->validate($request, $aturan);
+    
+                    $data = [
+                        'kategoris_id'      => $request->kategoris_id,
+                        'tipes_id'          => $request->tipes_id,
+                        'nama'              => $request->nama,
+                        'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                        'stok'              => $request->stok,
+                    ];
+                } else {
+                    $aturan = [
+                        'brosur'            => 'required|mimes:pdf',
+                        'kategoris_id'      => 'required',
+                        'tipes_id'          => 'required',
+                        'nama'              => 'required|unique:merks,nama,'.$id.',id',
+                        'harga_jual'        => 'required',
+                        'stok'              => 'required',
+                    ];
+                    $this->validate($request, $aturan);
+    
+                    $brosur_lama        = $cek->brosur;
+                    if (Storage::disk('public')->exists($brosur_lama))
+                        Storage::disk('public')->delete($brosur_lama);
+    
+                    $nama_brosur = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('brosur')->getClientOriginalName())));
+                    $path_brosur = 'barang/';
+                    Storage::disk('public')->put($path_brosur.$nama_brosur, file_get_contents($request->file('brosur')));
+    
+                    $data = [
+                        'brosur'            => $path_brosur.$nama_brosur,
+                        'kategoris_id'      => $request->kategoris_id,
+                        'tipes_id'          => $request->tipes_id,
+                        'nama'              => $request->nama,
+                        'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                        'stok'              => $request->stok,
+                    ];
+                }
                 Barang::insert($data);
-            }
                 
-            $setelah_simpan = [
-                'alert'                     => 'sukses',
-                'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
-            ];
-
-            if(request()->session()->get('halaman') != '') {
-                $url = request()->session()->get('halaman');
-                return redirect($url)->with('setelah_simpan', $setelah_simpan);
+                $setelah_simpan = [
+                    'alert'                     => 'sukses',
+                    'text'                      => 'Data '.$request->nama.' berhasil diperbarui',
+                ];
+    
+                if(request()->session()->get('halaman') != '') {
+                    $url = request()->session()->get('halaman');
+                    return redirect($url)->with('setelah_simpan', $setelah_simpan);
+                }
+                else
+                    return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             }
-            else
-                return redirect()->back()->with('setelah_simpan', $setelah_simpan);
         } else {
             return redirect('barang');
         }

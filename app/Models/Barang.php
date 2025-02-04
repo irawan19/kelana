@@ -20,5 +20,6 @@ class Barang extends Model
         'nama',
         'harga_jual',
         'stok',
+        'brosur',
     ];
 }

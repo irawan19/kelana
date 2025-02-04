@@ -104,6 +104,16 @@ class General
 				</button>';
 		}
 
+		public static function download($link)
+		{
+			echo '<a href="'.URL($link).'" target="_blank" class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
+                    <i class="material-icons">file_download</i>
+                    <span class="mdl-button__ripple-container">
+						<span class="mdl-ripple is-animating" style="width: 92.5097px; height: 92.5097px; transform: translate(-50%, -50%) translate(22px, 23px);"></span>
+					</span>
+				</a>';
+		}
+
 		public static function cetak($link)
 		{
 			echo '<a href="'.URL($link).'" class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised mdl-js-ripple-effect button--colored-green" data-upgraded=",MaterialButton,MaterialRipple">
