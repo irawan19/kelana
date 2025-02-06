@@ -119,7 +119,7 @@
 </style>
 <div class="page">
     <header>
-        <img src="{{ URL('template/images/logo.png') }}" alt="Logo PT. Putra Kelana Gemilang">
+        <img src="{{ public_path('template/images/logo.png') }}" alt="Logo PT. Putra Kelana Gemilang">
         <div class="textheader">
             <h1>PT. PUTRA KELANA GEMILANG</h1>
             <p>Medical and Hospital equipment supplier</p>
@@ -181,10 +181,10 @@
     </section>
 
     <div class="footer">
-        <img src="{{ URL('template/images/logo.png') }}" class="tandatangan" alt="Tanda Tangan">
+        <img src="{{ public_path('template/images/logo.png') }}" class="tandatangan" alt="Tanda Tangan">
         <p><u>Aji Wahyu Wibowo</u></p>
         <p class="direkturtext">Direktur</p>
     </div>
 </div>
 
-<script type="text/javascript">window.onload=function(){window.print();setTimeout(function(){window.close(window.location = "{{URL('penawaran')}}");}, 1);}</script>
+<!-- <script type="text/javascript">window.onload=function(){window.print();setTimeout(function(){window.close(window.location = "{{URL('penawaran')}}");}, 1);}</script> -->
