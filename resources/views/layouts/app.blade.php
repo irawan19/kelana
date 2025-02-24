@@ -4,13 +4,13 @@
     <link rel="icon" type="image/png" href="{{URL::asset('template/images/logo.png')}}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="description" content="Aplikasi penawaran PT. Putra Kelana Gemilang.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <meta name="apple-mobile-web-app-title" content="Aplikasi penawaran PT. Putra Kelana Gemilang">
     <meta name="msapplication-TileImage" content="{{URL::asset('template/images/logo.png')}}">
     <meta name="msapplication-TileColor" content="#3372DF">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,300,100,700,900' rel='stylesheet'
