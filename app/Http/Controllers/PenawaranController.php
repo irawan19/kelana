@@ -6,7 +6,7 @@ use App\Models\Penawaran;
 use App\Models\Barang;
 use App\Models\Penawaran_barang;
 use App\Helpers\General;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\PDF;
 use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 use URL;
 
@@ -261,7 +261,7 @@ class PenawaranController extends Controller {
                                                             ->where('penawarans_id',$cek->id)
                                                             ->get();
 
-            $pdf = \Pdf::loadView('penawaran.cetak', $data);
+            $pdf = PDF::loadView('penawaran.cetak', $data);
             $pdf->save(public_path('storage/penawaran/'.$cek->id.'.pdf'));
 
             $oMerger = PDFMerger::init();
