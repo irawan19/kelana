@@ -261,7 +261,7 @@ class PenawaranController extends Controller {
                                                             ->where('penawarans_id',$cek->id)
                                                             ->get();
 
-            $pdf = Pdf::loadView('penawaran.cetak', $data, [], 'UTF-8');
+            $pdf = \Pdf::loadView('penawaran.cetak', $data);
             $pdf->save(public_path('storage/penawaran/'.$cek->id.'.pdf'));
 
             $oMerger = PDFMerger::init();
