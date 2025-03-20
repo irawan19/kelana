@@ -13,6 +13,7 @@ class BarangController extends Controller
         if($limit != 0)
         {
             $ambil_barang  = Barang::selectRaw('barangs.id as id_barangs,
+                                                barangs.foto as foto_barangs,
                                                 barangs.nama as nama_barangs,
                                                 barangs.harga_jual,
                                                 barangs.stok,
@@ -30,6 +31,7 @@ class BarangController extends Controller
         else
         {
             $ambil_barang  = Barang::selectRaw('barangs.id as id_barangs,
+                                                barangs.foto as foto_barangs,
                                                 barangs.nama as nama_barangs,
                                                 barangs.harga_jual,
                                                 barangs.stok,

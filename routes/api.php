@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\BarangController;
+use App\Http\Controllers\api\BarangController as Barang;
 use App\Http\Controllers\api\PenawaranController;
 
-Route::apiResource('/barang/{limit}', BarangController::class);
-Route::apiResource('/penawaran', PenawaranController::class);
+Route::get('/barang/{limit}', [Barang::class, 'index']);
+Route::post('/penawaran', [Penawaran::class, 'index']);

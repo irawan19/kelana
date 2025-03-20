@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ URL::asset('template/css/application.min.css') }}">
 	<link type="text/css" media="screen" rel="stylesheet" href="{{{ URL::asset('template/vendors/select2/dist/css/select2.min.css')}}}" />
     <link rel="stylesheet" href="{{ URL::asset('template/css/custom.css') }}">
+    <link rel="stylesheet" href="{{URL::asset('template/vendors/fancybox/jquery.fancybox.min.css')}}" />
     <script src="{{ URL::asset('template/js/jquery-3.7.1.js') }}"></script>
     <script type="text/javascript">
         jQuery(document).ready(function () {
@@ -71,6 +72,7 @@
 <script src="{{URL::asset('template/vendors/sweetalert2/sweet-alert.init.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('template/vendors/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ URL::asset('template/vendors/price/jquery.price.js') }}"></script>
+<script src="{{URL::asset('template/vendors/fancybox/jquery.fancybox.min.js')}}"></script>
 <script>
     jQuery(document).ready(function () {
         //Sweet Alert

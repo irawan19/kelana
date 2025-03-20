@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('kategoris_id')->references('id')->on('kategoris')->onUpdate('set null')->onDelete('set null');
             $table->bigInteger('tipes_id')->unsigned()->index()->nullable();
             $table->foreign('tipes_id')->references('id')->on('tipes')->onUpdate('set null')->onDelete('set null');
+            $table->string('foto');
             $table->longtext('nama');
             $table->double('harga_jual');
             $table->longtext('brosur');

@@ -35,6 +35,7 @@
                             <th class="mdl-data-table__cell--non-numeric">Merk</th>
                             <th class="mdl-data-table__cell--non-numeric">Tipe</th>
                             <th class="mdl-data-table__cell--non-numeric">Nama</th>
+                            <th class="mdl-data-table__cell--non-numeric">Foto</th>
                             <th class="mdl-data-table__cell--non-numeric">Harga Jual</th>
                             <th class="mdl-data-table__cell--non-numeric">Stok</th>
                             <th class="mdl-data-table__cell--non-numeric">Brosur</th>
@@ -52,6 +53,17 @@
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_merks }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_tipes }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->nama_barangs }}</td>
+                                        <td class="mdl-data-table__cell--non-numeric">
+                                            @if(!empty($barang->foto_barangs))
+                                                <a data-fancybox="gallery" href="{{URL::asset('storage/'.$barang->foto_barangs)}}">
+                                                    <img src="{{ URL::asset('storage/'.$barang->foto_barangs) }}" width="50">
+                                                </a>
+                                            @else
+                                                <a data-fancybox="gallery" href="{{URL::asset('template/images/logo2.png')}}">
+                                                    <img src="{{ URL::asset('template/images/logo2.png') }}" width="50">
+                                                </a>
+                                            @endif
+                                        </td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ \App\Helpers\General::ubahDBKeHarga($barang->harga_jual) }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">{{ $barang->stok }}</td>
                                         <td class="mdl-data-table__cell--non-numeric">
@@ -69,7 +81,8 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="9" class="center-align">Tidak ada data ditampilkan</td>
+                                    <td colspan="10" class="center-align">Tidak ada data ditampilkan</td>
+								    <td style="display:none"></td>
 								    <td style="display:none"></td>
 								    <td style="display:none"></td>
 								    <td style="display:none"></td>
@@ -127,6 +140,13 @@
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                             </div>
                             <div class="mdl-grid">
+                                <label for="brosur">Foto</label>
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input id="foto" type="file" name="foto" accept="image/png, image/gif, image/jpeg">
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('foto'))}}
+                            </div>
+                            <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="mdl-textfield__input priceformat" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') == '' ? \App\Helpers\General::ubahDBKeHarga(0) : Request::old('harga_jual') }}" />
                                     <label class="mdl-textfield__label" for="harga_jual">Harga Jual</label>
@@ -141,6 +161,7 @@
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('stok'))}}
                             </div>
                             <div class="mdl-grid">
+                                <label for="brosur">Brosur</label>
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input id="brosur" type="file" name="brosur" accept="application/pdf">
                                 </div>
@@ -207,6 +228,26 @@
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('nama'))}}
                             </div>
                             <div class="mdl-grid">
+                                <label for="foto">Foto</label>
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    @if(!empty($edit_barangs->foto_barangs))
+                                        <a data-fancybox="gallery" href="{{URL::asset('storage/'.$edit_barangs->foto_barangs)}}">
+                                            <img src="{{ URL::asset('storage/'.$edit_barangs->foto_barangs) }}" width="100">
+                                        </a>
+                                    @else
+                                        <a data-fancybox="gallery" href="{{URL::asset('template/images/logo2.png')}}">
+                                            <img src="{{ URL::asset('template/images/logo2.png') }}" width="100">
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="mdl-grid">
+                                <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input id="foto" type="file" name="foto" accept="image/png, image/gif, image/jpeg">
+                                </div>
+                                {{\App\Helpers\General::pesanErrorForm($errors->first('foto'))}}
+                            </div>
+                            <div class="mdl-grid">
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="mdl-textfield__input priceformat" type="text" id="harga_jual" name="harga_jual" value="{{ Request::old('harga_jual') == '' ? \App\Helpers\General::ubahDBKeHarga($edit_barangs->harga_jual) : Request::old('harga_jual') }}" autofocus />
                                     <label class="mdl-textfield__label" for="harga_jual">Harga Jual</label>
@@ -221,6 +262,7 @@
                                 {{\App\Helpers\General::pesanErrorForm($errors->first('stok'))}}
                             </div>
                             <div class="mdl-grid">
+                                <label for="brosur">Brosur</label>
                                 <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     @if(!empty($edit_barangs->brosur))
                                         <a href="{{ URL::asset('storage/'.$edit_barangs->brosur) }}" target="_blank" class="text_info">Klik untuk melihat brosur</a>

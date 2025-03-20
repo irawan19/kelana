@@ -17,6 +17,7 @@ class PenawaranController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
+                                                            barangs.foto as foto_barangs,
                                                             barangs.brosur as brosur_barangs,
                                                             barangs.harga_jual,
                                                             barangs.stok,
@@ -42,6 +43,7 @@ class PenawaranController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
+                                                            barangs.foto as foto_barangs,
                                                             barangs.brosur as brosur_barangs,
                                                             barangs.harga_jual,
                                                             barangs.stok,
@@ -145,6 +147,7 @@ class PenawaranController extends Controller {
                                                         ->paginate(10);
             $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                                 barangs.nama as nama_barangs,
+                                                                barangs.foto as foto_barangs,
                                                                 barangs.brosur as brosur_barangs,
                                                                 barangs.harga_jual,
                                                                 barangs.stok,
@@ -249,6 +252,7 @@ class PenawaranController extends Controller {
             $data['penawaran']          = $cek;
             $data['penawaran_barangs']  = Penawaran_barang::selectRaw('barangs.id as id_barangs,
                                                                         barangs.nama as nama_barangs,
+                                                                        barangs.foto as foto_barangs,
                                                                         barangs.brosur as brosur_barangs,
                                                                         kategoris.nama as nama_kategoris,
                                                                         merks.nama as nama_merks,

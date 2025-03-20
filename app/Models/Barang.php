@@ -18,6 +18,7 @@ class Barang extends Model
         'kategoris_id',
         'tipes_id',
         'nama',
+        'foto',
         'harga_jual',
         'stok',
         'brosur',

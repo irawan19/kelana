@@ -15,6 +15,7 @@ class BarangController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
+                                                            barangs.foto as foto_barangs,
                                                             barangs.harga_jual,
                                                             barangs.stok,
                                                             barangs.brosur,
@@ -46,6 +47,7 @@ class BarangController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
+                                                            barangs.foto as foto_barangs,
                                                             barangs.harga_jual,
                                                             barangs.stok,
                                                             barangs.brosur,
@@ -77,34 +79,31 @@ class BarangController extends Controller {
     public function prosestambah(Request $request) {
         $cek = Barang::onlyTrashed()->where('nama',$request->nama)->first();
         if (empty($cek)) {
-            if(empty($request->brosur)) {
+            $aturan = [
+                'kategoris_id'      => 'required',
+                'tipes_id'          => 'required',
+                'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
+                'harga_jual'        => 'required',
+                'stok'              => 'required',
+            ];
+            $this->validate($request, $aturan);
+
+            $data = [
+                'kategoris_id'      => $request->kategoris_id,
+                'tipes_id'          => $request->tipes_id,
+                'nama'              => $request->nama,
+                'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                'stok'              => $request->stok,
+                'created_at'        => date('Y-m-d H:i:s'),
+            ];
+
+            if(!empty($request->brosur)) {
                 $aturan = [
-                    'kategoris_id'      => 'required',
-                    'tipes_id'          => 'required',
-                    'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
-                    'harga_jual'        => 'required',
-                    'stok'              => 'required',
+                    'brosur'            => 'required|mimes:pdf',
                 ];
                 $this->validate($request, $aturan);
 
-                $data = [
-                    'kategoris_id'      => $request->kategoris_id,
-                    'tipes_id'          => $request->tipes_id,
-                    'nama'              => $request->nama,
-                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                    'stok'              => $request->stok,
-                    'created_at'        => date('Y-m-d H:i:s'),
-                ];
-            } else {
-                $aturan = [
-                    'brosur'            => 'required|mimes:pdf',
-                    'kategoris_id'      => 'required',
-                    'tipes_id'          => 'required',
-                    'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
-                    'harga_jual'        => 'required',
-                    'stok'              => 'required',
-                ];
-                $this->validate($request, $aturan);
+                $id_barang = Barang::insertGetId($data);
 
                 $nama_brosur = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('brosur')->getClientOriginalName())));
                 $path_brosur = 'barang/';
@@ -112,15 +111,27 @@ class BarangController extends Controller {
 
                 $data = [
                     'brosur'            => $path_brosur.$nama_brosur,
-                    'kategoris_id'      => $request->kategoris_id,
-                    'tipes_id'          => $request->tipes_id,
-                    'nama'              => $request->nama,
-                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                    'stok'              => $request->stok,
-                    'created_at'        => date('Y-m-d H:i:s'),
                 ];
+                Barang::find($id_barang)->update($data);
             }
-            Barang::insert($data);
+
+            if(!empty($request->foto)) {
+                $aturan = [
+                    'foto'            => 'required|mimes:jpg,jpeg,png',
+                ];
+                $this->validate($request, $aturan);
+                
+                $id_barang = Barang::insertGetId($data);
+
+                $nama_foto = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('foto')->getClientOriginalName())));
+                $path_foto = 'barang/';
+                Storage::disk('public')->put($path_foto.$nama_foto, file_get_contents($request->file('foto')));
+
+                $data = [
+                    'foto'            => $path_foto.$nama_foto,
+                ];
+                Barang::find($id_barang)->update($data);
+            }
 
             $setelah_simpan = [
                 'alert'                     => 'sukses',
@@ -131,6 +142,47 @@ class BarangController extends Controller {
             $cek_exist = Barang::where('nama',$request->nama)->count();
             if($cek_exist == 0) {
                 Barang::where('id',$cek->id)->restore();
+                $id = $cek->id;
+                
+                if(!empty($request->brosur)) {
+                    $aturan = [
+                        'brosur'            => 'required|mimes:pdf',
+                    ];
+                    $this->validate($request, $aturan);
+
+                    $brosur_lama        = $cek->brosur;
+                    if (Storage::disk('public')->exists($brosur_lama))
+                        Storage::disk('public')->delete($brosur_lama);
+
+                    $nama_brosur = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('brosur')->getClientOriginalName())));
+                    $path_brosur = 'barang/';
+                    Storage::disk('public')->put($path_brosur.$nama_brosur, file_get_contents($request->file('brosur')));
+
+                    $data = [
+                        'brosur'            => $path_brosur.$nama_brosur,
+                    ];
+                    Barang::find($id)->update($data);
+                }
+
+                if(!empty($request->foto)) {
+                    $aturan = [
+                        'foto'            => 'required|mimes:jpg,jpeg,png',
+                    ];
+                    $this->validate($request, $aturan);
+                    
+                    $foto_lama        = $cek->foto;
+                    if (Storage::disk('public')->exists($foto_lama))
+                        Storage::disk('public')->delete($foto_lama);
+    
+                    $nama_foto = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('foto')->getClientOriginalName())));
+                    $path_foto = 'barang/';
+                    Storage::disk('public')->put($path_foto.$nama_foto, file_get_contents($request->file('foto')));
+    
+                    $data = [
+                        'foto'            => $path_foto.$nama_foto,
+                    ];
+                    Barang::find($id)->update($data);
+                }
                 
                 $setelah_simpan = [
                     'alert'                     => 'sukses',
@@ -154,6 +206,7 @@ class BarangController extends Controller {
             $data['hasil_kata']     = $hasil_kata;
             $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                                 barangs.nama as nama_barangs,
+                                                                barangs.foto as foto_barangs,
                                                                 barangs.harga_jual,
                                                                 barangs.stok,
                                                                 barangs.brosur,
@@ -189,32 +242,27 @@ class BarangController extends Controller {
         if (!empty($cek)) {
             $cek_deleted = Barang::onlyTrashed()->where('nama',$request->nama)->first();
             if (empty($cek_deleted)) {
-                if(empty($request->brosur)) {
-                    $aturan = [
-                        'kategoris_id'      => 'required',
-                        'tipes_id'          => 'required',
-                        'nama'              => 'required|unique:merks,nama,'.$id.',id',
-                        'harga_jual'        => 'required',
-                        'stok'              => 'required',
-                    ];
-                    $this->validate($request, $aturan);
+                $aturan = [
+                    'kategoris_id'      => 'required',
+                    'tipes_id'          => 'required',
+                    'nama'              => 'required|unique:merks,nama,'.$id.',id',
+                    'harga_jual'        => 'required',
+                    'stok'              => 'required',
+                ];
+                $this->validate($request, $aturan);
 
-                    $data = [
-                        'kategoris_id'      => $request->kategoris_id,
-                        'tipes_id'          => $request->tipes_id,
-                        'nama'              => $request->nama,
-                        'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                        'stok'              => $request->stok,
-                    ];
-                    Barang::find($id)->update($data);
-                } else {
+                $data = [
+                    'kategoris_id'      => $request->kategoris_id,
+                    'tipes_id'          => $request->tipes_id,
+                    'nama'              => $request->nama,
+                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                    'stok'              => $request->stok,
+                ];
+                Barang::find($id)->update($data);
+
+                if(!empty($request->brosur)) {
                     $aturan = [
                         'brosur'            => 'required|mimes:pdf',
-                        'kategoris_id'      => 'required',
-                        'tipes_id'          => 'required',
-                        'nama'              => 'required|unique:merks,nama,'.$id.',id',
-                        'harga_jual'        => 'required',
-                        'stok'              => 'required',
                     ];
                     $this->validate($request, $aturan);
 
@@ -228,11 +276,26 @@ class BarangController extends Controller {
 
                     $data = [
                         'brosur'            => $path_brosur.$nama_brosur,
-                        'kategoris_id'      => $request->kategoris_id,
-                        'tipes_id'          => $request->tipes_id,
-                        'nama'              => $request->nama,
-                        'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                        'stok'              => $request->stok,
+                    ];
+                    Barang::find($id)->update($data);
+                }
+
+                if(!empty($request->foto)) {
+                    $aturan = [
+                        'foto'            => 'required|mimes:jpg,jpeg,png',
+                    ];
+                    $this->validate($request, $aturan);
+                    
+                    $foto_lama        = $cek->foto;
+                    if (Storage::disk('public')->exists($foto_lama))
+                        Storage::disk('public')->delete($foto_lama);
+    
+                    $nama_foto = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('foto')->getClientOriginalName())));
+                    $path_foto = 'barang/';
+                    Storage::disk('public')->put($path_foto.$nama_foto, file_get_contents($request->file('foto')));
+    
+                    $data = [
+                        'foto'            => $path_foto.$nama_foto,
                     ];
                     Barang::find($id)->update($data);
                 }
@@ -249,39 +312,42 @@ class BarangController extends Controller {
                 else
                     return redirect()->back()->with('setelah_simpan', $setelah_simpan);
             } else {
+                $cek_barang         = Barang::find($id);
+                $brosur_lama        = $cek_barang->brosur;
+                if (Storage::disk('public')->exists($brosur_lama))
+                    Storage::disk('public')->delete($brosur_lama);
+
+                $foto_lama        = $cek_barang->foto;
+                if (Storage::disk('public')->exists($foto_lama))
+                    Storage::disk('public')->delete($foto_lama);
+
                 Barang::find($id)->delete();
 
-                if(empty($request->brosur)) {
-                    $aturan = [
-                        'kategoris_id'      => 'required',
-                        'tipes_id'          => 'required',
-                        'nama'              => 'required|unique:merks,nama,'.$id.',id',
-                        'harga_jual'        => 'required',
-                        'stok'              => 'required',
-                    ];
-                    $this->validate($request, $aturan);
+                $aturan = [
+                    'kategoris_id'      => 'required',
+                    'tipes_id'          => 'required',
+                    'nama'              => 'required|unique:barangs,nama,NULL,id,deleted_at,NULL',
+                    'harga_jual'        => 'required',
+                    'stok'              => 'required',
+                ];
+                $this->validate($request, $aturan);
     
-                    $data = [
-                        'kategoris_id'      => $request->kategoris_id,
-                        'tipes_id'          => $request->tipes_id,
-                        'nama'              => $request->nama,
-                        'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                        'stok'              => $request->stok,
-                    ];
-                } else {
+                $data = [
+                    'kategoris_id'      => $request->kategoris_id,
+                    'tipes_id'          => $request->tipes_id,
+                    'nama'              => $request->nama,
+                    'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
+                    'stok'              => $request->stok,
+                    'created_at'        => date('Y-m-d H:i:s'),
+                ];
+    
+                if(!empty($cek_barang->brosur)) {
                     $aturan = [
                         'brosur'            => 'required|mimes:pdf',
-                        'kategoris_id'      => 'required',
-                        'tipes_id'          => 'required',
-                        'nama'              => 'required|unique:merks,nama,'.$id.',id',
-                        'harga_jual'        => 'required',
-                        'stok'              => 'required',
                     ];
                     $this->validate($request, $aturan);
     
-                    $brosur_lama        = $cek->brosur;
-                    if (Storage::disk('public')->exists($brosur_lama))
-                        Storage::disk('public')->delete($brosur_lama);
+                    $id_barang = Barang::insertGetId($data);
     
                     $nama_brosur = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('brosur')->getClientOriginalName())));
                     $path_brosur = 'barang/';
@@ -289,14 +355,27 @@ class BarangController extends Controller {
     
                     $data = [
                         'brosur'            => $path_brosur.$nama_brosur,
-                        'kategoris_id'      => $request->kategoris_id,
-                        'tipes_id'          => $request->tipes_id,
-                        'nama'              => $request->nama,
-                        'harga_jual'        => General::ubahHargaKeDB($request->harga_jual),
-                        'stok'              => $request->stok,
                     ];
+                    Barang::find($id_barang)->update($data);
                 }
-                Barang::insert($data);
+    
+                if(!empty($request->foto)) {
+                    $aturan = [
+                        'foto'            => 'required|mimes:jpg,jpeg,png',
+                    ];
+                    $this->validate($request, $aturan);
+                    
+                    $id_barang = Barang::insertGetId($data);
+    
+                    $nama_foto = date('Ymd').date('His').str_replace(')','',str_replace('(','',str_replace(' ','-',$request->file('foto')->getClientOriginalName())));
+                    $path_foto = 'barang/';
+                    Storage::disk('public')->put($path_foto.$nama_foto, file_get_contents($request->file('foto')));
+    
+                    $data = [
+                        'foto'            => $path_foto.$nama_foto,
+                    ];
+                    Barang::find($id_barang)->update($data);
+                }
                 
                 $setelah_simpan = [
                     'alert'                     => 'sukses',

@@ -14,6 +14,7 @@ class SupplierBarangController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                         barangs.nama as nama_barangs,
+                                                        barangs.foto as foto_barangs,
                                                         barangs.harga_jual,
                                                         barangs.stok,
                                                         kategoris.nama as nama_kategoris,
@@ -36,6 +37,7 @@ class SupplierBarangController extends Controller {
                                                                         tipes.nama as nama_tipes,
                                                                         barangs.id as id_barangs,
                                                                         barangs.nama as nama_barangs,
+                                                                        barangs.foto as foto_barangs,
                                                                         barangs.harga_jual,
                                                                         barangs.stok')
                                                         ->join('suppliers','suppliers.id','supplier_barangs.suppliers_id')
@@ -58,6 +60,7 @@ class SupplierBarangController extends Controller {
         $url_sekarang                   = $request->fullUrl();
         $data['barangs']                = Barang::selectRaw('barangs.id as id_barangs,
                                                         barangs.nama as nama_barangs,
+                                                        barangs.foto as foto_barangs,
                                                         barangs.harga_jual,
                                                         barangs.stok,
                                                         kategoris.nama as nama_kategoris,
@@ -80,6 +83,7 @@ class SupplierBarangController extends Controller {
                                                                         tipes.nama as nama_tipes,
                                                                         barangs.id as id_barangs,
                                                                         barangs.nama as nama_barangs,
+                                                                        barangs.foto as foto_barangs,
                                                                         barangs.harga_jual,
                                                                         barangs.stok')
                                                         ->join('suppliers','suppliers.id','supplier_barangs.suppliers_id')
@@ -159,6 +163,7 @@ class SupplierBarangController extends Controller {
             $data['hasil_kata']         = $hasil_kata;
             $data['barangs']            = Barang::selectRaw('barangs.id as id_barangs,
                                                             barangs.nama as nama_barangs,
+                                                            barangs.foto as foto_barangs,
                                                             barangs.harga_jual,
                                                             barangs.stok,
                                                             kategoris.nama as nama_kategoris,
@@ -181,6 +186,7 @@ class SupplierBarangController extends Controller {
                                                                 tipes.nama as nama_tipes,
                                                                 barangs.id as id_barangs,
                                                                 barangs.nama as nama_barangs,
+                                                                barangs.foto as foto_barangs,
                                                                 barangs.harga_jual,
                                                                 barangs.stok')
                                                         ->join('suppliers','suppliers.id','supplier_barangs.suppliers_id')
