@@ -7,7 +7,7 @@
             @if(Auth::user()->profile_photo_path == null)
                 <img src="{{ Auth::user()->profile_photo_url }}" alt="{{Auth::user()->email}}">
             @else
-                <img rc="{{ URL::asset(Auth::user()->profile_photo_path) }}" alt="{{Auth::user()->email}}">
+                <img src="{{ URL::asset(Auth::user()->profile_photo_path) }}" alt="{{Auth::user()->email}}">
             @endif
         </div>
         <ul class="mdl-menu mdl-list mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp account-dropdown"
